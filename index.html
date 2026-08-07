@@ -12,18 +12,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <style>
 :root{
-  --red:#C4171F;
-  --red-dark:#8C1015;
-  --red-soft:#D9636A;
-  --gray-dark:#575756;
+  --blue:#1B6FA8;
+  --blue-dark:#0D3D5C;
+  --teal:#2C9C8F;
+  --green:#3E8E5D;
+  --gray-dark:#4A4A49;
   --gray-mid:#9D9C9C;
   --gray-light:#D9D9D8;
-  --bg:#F7F7F7;
+  --bg:#F5F8FA;
   --card:#FFFFFF;
-  --text:#2B2B2A;
-  --text-muted:#6E6E6D;
-  --border:#E6E6E5;
-  --map-empty:#E3E3E2;
+  --text:#26302E;
+  --text-muted:#647070;
+  --border:#E1E6E8;
+  --map-empty:#E3E6E7;
+  --tint:#E8F1F7;
   --radius:10px;
 }
 *{box-sizing:border-box;}
@@ -34,20 +36,20 @@ body{
   color:var(--text);
   line-height:1.45;
 }
-a{color:var(--red-dark);}
+a{color:var(--blue-dark);}
 
 /* ---------- Header ---------- */
 .app-header{
   background:#fff;
-  border-top:6px solid var(--red);
-  border-bottom:6px solid var(--red);
+  border-top:6px solid var(--blue);
+  border-bottom:6px solid var(--blue);
   padding:20px 28px;
 }
 .app-header .eyebrow{
   text-transform:uppercase;
   letter-spacing:.1em;
   font-size:11.5px;
-  color:var(--red);
+  color:var(--blue);
   font-weight:700;
   margin-bottom:6px;
 }
@@ -93,7 +95,7 @@ a{color:var(--red-dark);}
 .tab-btn:hover{ color:#fff; }
 .tab-btn.active{
   color:#fff;
-  border-bottom-color:var(--red);
+  border-bottom-color:var(--blue);
 }
 
 main{ padding:22px 24px 56px; max-width:1180px; margin:0 auto; }
@@ -125,7 +127,7 @@ p.panel-desc{
   border-radius:var(--radius);
   border:1px solid var(--border);
   padding:16px 18px;
-  border-top:3px solid var(--red);
+  border-top:3px solid var(--blue);
 }
 .kpi-value{
   font-size:28px;
@@ -222,9 +224,9 @@ p.panel-desc{
   cursor:pointer;
   color:var(--text);
 }
-.intercambio-item:hover{ background:#FBEBEC; }
+.intercambio-item:hover{ background:var(--tint); }
 .intercambio-item.active{
-  background:var(--red);
+  background:var(--blue);
   color:#fff;
   border-radius:6px;
 }
@@ -232,14 +234,14 @@ p.panel-desc{
   display:inline-block;
   font-size:10.5px;
   font-weight:700;
-  color:var(--red-dark);
-  background:#FBEBEC;
+  color:var(--blue-dark);
+  background:var(--tint);
   border-radius:4px;
   padding:1px 5px;
   margin-right:6px;
 }
 .intercambio-item.active .yr{
-  color:var(--red);
+  color:var(--blue);
   background:#fff;
 }
 .reset-btn, .clear-filters-btn{
@@ -247,15 +249,15 @@ p.panel-desc{
   margin-top:8px;
   padding:8px 10px;
   border-radius:6px;
-  border:1px solid var(--red);
+  border:1px solid var(--blue);
   background:#fff;
-  color:var(--red);
+  color:var(--blue);
   font-family:inherit;
   font-weight:600;
   font-size:12.5px;
   cursor:pointer;
 }
-.reset-btn:hover, .clear-filters-btn:hover{ background:#FBEBEC; }
+.reset-btn:hover, .clear-filters-btn:hover{ background:var(--tint); }
 
 .map-panel{
   background:var(--card);
@@ -276,21 +278,24 @@ p.panel-desc{
 #map-svg-wrap svg.main-map{ width:100%; height:auto; display:block; }
 .inset-box{
   position:absolute;
-  right:6px;
-  bottom:6px;
-  width:26%;
-  min-width:90px;
+  left:6px;
+  top:6px;
+  width:30%;
+  min-width:110px;
+  max-width:150px;
   background:#fff;
   border:1px solid var(--border);
   border-radius:6px;
-  padding:4px;
+  padding:6px;
 }
 .inset-box .inset-label{
   font-size:9px;
   color:var(--text-muted);
   text-align:center;
   margin-top:2px;
+  line-height:1.25;
 }
+.inset-box .dept-path{ stroke:var(--blue-dark); stroke-width:1.3; }
 .dept-path{ stroke:#fff; stroke-width:0.7; cursor:default; transition:fill .15s; }
 .dept-path.highlight{ cursor:pointer; }
 .map-tooltip{
@@ -329,8 +334,8 @@ p.panel-desc{
 .detail-row .v{ font-size:12.8px; color:var(--text); }
 .dept-tag-list{ display:flex; flex-wrap:wrap; gap:6px; }
 .dept-tag{
-  background:#FBEBEC;
-  color:var(--red-dark);
+  background:var(--tint);
+  color:var(--blue-dark);
   border-radius:5px;
   padding:3px 8px;
   font-size:11.8px;
@@ -362,7 +367,7 @@ footer{
 #boot-screen.hidden{ display:none; }
 .spinner{
   width:34px; height:34px; border-radius:50%;
-  border:3px solid var(--gray-light); border-top-color:var(--red);
+  border:3px solid var(--gray-light); border-top-color:var(--blue);
   animation:spin 0.8s linear infinite;
 }
 @keyframes spin{ to{ transform:rotate(360deg); } }
@@ -370,14 +375,14 @@ footer{
   max-width:520px;
   background:#fff;
   border:1px solid var(--border);
-  border-left:4px solid var(--red);
+  border-left:4px solid var(--blue);
   border-radius:8px;
   padding:18px 22px;
   text-align:left;
   font-size:13.5px;
   display:none;
 }
-#boot-error h3{ margin-top:0; color:var(--red); font-size:15px; }
+#boot-error h3{ margin-top:0; color:var(--blue); font-size:15px; }
 
 @media (max-width: 880px){
   .kpi-grid{ grid-template-columns:1fr 1fr; }
@@ -572,12 +577,12 @@ const DPTO_TO_DEPT = Object.fromEntries(Object.entries(DEPT_TO_DPTO).map(([k,v])
 
 // Paleta institucional APC Colombia (manual de imagen): rojo + grises, con matices para variedad
 const PALETTE = {
-  red: '#C4171F',
-  redDark: '#8C1015',
-  redSoft: '#D9636A',
-  grayDark: '#575756',
-  grayMid: '#9D9C9C',
-  grayLight: '#C9C9C8'
+  blue: '#1B6FA8',
+  blueDark: '#0D3D5C',
+  teal: '#2C9C8F',
+  green: '#3E8E5D',
+  grayDark: '#4A4A49',
+  grayMid: '#9D9C9C'
 };
 const MAP_EMPTY = '#E3E3E2';
 
@@ -781,7 +786,7 @@ function renderKpis(){
   document.getElementById('kpi-municipios').textContent = k.totalMunicipios.toLocaleString('es-CO');
 }
 
-function barChart(canvasId, labels, values, {horizontal=false, color=PALETTE.red} = {}){
+function barChart(canvasId, labels, values, {horizontal=false, color=PALETTE.blue} = {}){
   const ctx = document.getElementById(canvasId);
   if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
   CHARTS[canvasId] = new Chart(ctx, {
@@ -805,16 +810,16 @@ function renderYearCharts(years){
   const yearLabels = years.map(String);
 
   const iXA = intercambiosPorAnio(DATA.registro);
-  barChart('chart-intercambios-anio', yearLabels, yearLabels.map(y => iXA[y] || 0), { color: PALETTE.red });
+  barChart('chart-intercambios-anio', yearLabels, yearLabels.map(y => iXA[y] || 0), { color: PALETTE.blue });
 
   const pXA = participantesPorAnio(DATA.registro, DATA.etapas);
   barChart('chart-participantes-anio', yearLabels, yearLabels.map(y => pXA[y] || 0), { color: PALETTE.grayDark });
 
   const dXA = departamentosPorAnio(DATA.registro, DATA.departamentos);
-  barChart('chart-departamentos-anio', yearLabels, yearLabels.map(y => dXA[y] || 0), { color: PALETTE.redSoft });
+  barChart('chart-departamentos-anio', yearLabels, yearLabels.map(y => dXA[y] || 0), { color: PALETTE.teal });
 
   const mXA = municipiosPorAnio(DATA.registro, DATA.departamentos);
-  barChart('chart-municipios-anio', yearLabels, yearLabels.map(y => mXA[y] || 0), { color: PALETTE.grayMid });
+  barChart('chart-municipios-anio', yearLabels, yearLabels.map(y => mXA[y] || 0), { color: PALETTE.green });
 }
 
 function renderTopDepartamentos(years){
@@ -825,7 +830,7 @@ function renderTopDepartamentos(years){
     const year = sel.value || null;
     const counts = intercambiosPorDepartamento(DATA.departamentos, DATA.registro, year);
     const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
-    barChart('chart-top-departamentos', sorted.map(p => p[0]), sorted.map(p => p[1]), { horizontal: true, color: PALETTE.redDark });
+    barChart('chart-top-departamentos', sorted.map(p => p[0]), sorted.map(p => p[1]), { horizontal: true, color: PALETTE.blueDark });
   }
   sel.addEventListener('change', update);
   update();
@@ -849,7 +854,7 @@ function renderCooperacion(years){
   function updateTematicas(){
     const y = selTem.value || null;
     const r = topN(ranking(DATA.registro, 'EJE TEMATICO', { year: y }), 10);
-    barChart('chart-tematicas', r.labels, r.values, { horizontal: true, color: PALETTE.red });
+    barChart('chart-tematicas', r.labels, r.values, { horizontal: true, color: PALETTE.blue });
   }
   function updateOds(){
     const y = selOds.value || null;
@@ -859,12 +864,12 @@ function renderCooperacion(years){
   function updateCooperantes(){
     const y = selCoop.value || null;
     const r = topN(ranking(DATA.registro, 'COOPERANTE PRINCIPAL', { year: y }), 10);
-    barChart('chart-cooperantes', r.labels, r.values, { horizontal: true, color: PALETTE.redSoft });
+    barChart('chart-cooperantes', r.labels, r.values, { horizontal: true, color: PALETTE.teal });
   }
   function updateEntidades(){
     const y = selEnt.value || null;
     const r = topN(rankingEntidades(DATA.entidades, DATA.registro, { year: y }), 10);
-    barChart('chart-entidades', r.labels, r.values, { horizontal: true, color: PALETTE.grayMid });
+    barChart('chart-entidades', r.labels, r.values, { horizontal: true, color: PALETTE.green });
   }
   selTem.addEventListener('change', updateTematicas);
   selOds.addEventListener('change', updateOds);
@@ -917,7 +922,7 @@ function setupMap(years){
 }
 
 function allDeptPaths(){
-  return d3.select('#map-svg-wrap').selectAll('path.dept-path');
+  return d3.select('#map-svg-wrap').selectAll('.dept-path');
 }
 
 function renderMapSvg(){
@@ -962,12 +967,23 @@ function renderMapSvg(){
       .style('display', 'block');
     const insetProjection = d3.geoMercator().fitSize([insetW - 8, insetH - 8], sanAndresFeature);
     const insetPath = d3.geoPath().projection(insetProjection);
-    insetSvg.append('g').attr('transform', 'translate(4,4)')
-      .append('path')
+    const insetG = insetSvg.append('g').attr('transform', 'translate(4,4)');
+    insetG.append('path')
       .datum(sanAndresFeature)
       .attr('class', 'dept-path')
       .attr('d', insetPath(sanAndresFeature))
       .attr('data-dpto', SAN_ANDRES_DPTO);
+    // La isla es tan pequeña que, aunque el recuadro esté bien encuadrado, el contorno
+    // puede verse como un punto casi imperceptible. Se agrega un círculo del mismo
+    // color sobre el centroide para que siempre sea visible, sin importar el zoom.
+    const centroid = insetProjection(d3.geoCentroid(sanAndresFeature));
+    insetG.append('circle')
+      .datum(sanAndresFeature)
+      .attr('class', 'dept-path')
+      .attr('data-dpto', SAN_ANDRES_DPTO)
+      .attr('cx', centroid[0])
+      .attr('cy', centroid[1])
+      .attr('r', 7);
     insetBox.insertAdjacentHTML('beforeend', '<div class="inset-label">San Andrés y Providencia</div>');
   }
 
@@ -986,7 +1002,7 @@ function renderMapSvg(){
 }
 
 function deptColorScale(maxVal){
-  return d3.scaleLinear().domain([0, maxVal || 1]).range(['#EDEDEC', PALETTE.grayDark]);
+  return d3.scaleLinear().domain([0, maxVal || 1]).range(['#DCEAF5', PALETTE.blueDark]);
 }
 
 function colorMapDefault(){
@@ -1004,7 +1020,7 @@ function colorMapDefault(){
     });
 
   document.getElementById('map-legend').innerHTML = `
-    <span class="legend-swatch" style="background:#EDEDEC"></span> menos intercambios
+    <span class="legend-swatch" style="background:#DCEAF5"></span> menos intercambios
     <span class="legend-swatch" style="background:${PALETTE.grayDark}; margin-left:6px;"></span> más intercambios`;
 }
 
@@ -1022,12 +1038,12 @@ function colorMapSelection(codigo, nombre){
       }
       d._info = participo ? info : '';
       d3.select(this)
-        .attr('fill', participo ? PALETTE.red : MAP_EMPTY)
+        .attr('fill', participo ? PALETTE.teal : MAP_EMPTY)
         .classed('highlight', !!participo);
     });
 
   document.getElementById('map-legend').innerHTML = `
-    <span class="legend-swatch" style="background:${PALETTE.red}"></span> departamento participante
+    <span class="legend-swatch" style="background:${PALETTE.teal}"></span> departamento participante
     <span class="legend-swatch" style="background:${MAP_EMPTY}; margin-left:6px;"></span> no participó`;
 
   document.getElementById('map-title').textContent = nombre;
