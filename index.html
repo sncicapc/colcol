@@ -4,62 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COL-COL — Colombia Enseña Colombia | APC Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.5.4/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <style>
 :root{
-  --navy:#0B2A52;
-  --navy-2:#123A6B;
-  --navy-soft:#E8EDF5;
-  --gold:#C9962B;
-  --gold-light:#F3DFA8;
-  --bg:#F4F5F7;
+  --red:#C4171F;
+  --red-dark:#8C1015;
+  --red-soft:#D9636A;
+  --gray-dark:#575756;
+  --gray-mid:#9D9C9C;
+  --gray-light:#D9D9D8;
+  --bg:#F7F7F7;
   --card:#FFFFFF;
-  --text:#1F2937;
-  --text-muted:#6B7280;
-  --border:#E2E5EA;
-  --map-empty:#DCE1E8;
+  --text:#2B2B2A;
+  --text-muted:#6E6E6D;
+  --border:#E6E6E5;
+  --map-empty:#E3E3E2;
   --radius:10px;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
-  font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-family:"Fira Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.45;
 }
-a{color:var(--navy-2);}
+a{color:var(--red-dark);}
 
 /* ---------- Header ---------- */
 .app-header{
-  background:linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
-  color:#fff;
-  padding:22px 28px 18px;
-  border-bottom:4px solid var(--gold);
+  background:#fff;
+  border-top:6px solid var(--red);
+  border-bottom:6px solid var(--red);
+  padding:20px 28px;
 }
 .app-header .eyebrow{
   text-transform:uppercase;
-  letter-spacing:.12em;
+  letter-spacing:.1em;
   font-size:11.5px;
-  color:var(--gold-light);
-  font-weight:600;
-  margin-bottom:4px;
+  color:var(--red);
+  font-weight:700;
+  margin-bottom:6px;
 }
 .app-header h1{
   margin:0 0 4px;
-  font-size:24px;
+  font-size:25px;
   font-weight:700;
-  letter-spacing:.01em;
+  letter-spacing:.005em;
+  color:var(--text);
 }
 .app-header .sub{
   font-size:13.5px;
-  color:#C9D6E8;
+  color:var(--text-muted);
+  font-weight:500;
 }
 #data-status{
   font-size:12.5px;
-  color:#C9D6E8;
+  color:var(--gray-dark);
   margin-top:6px;
 }
 
@@ -67,7 +73,7 @@ a{color:var(--navy-2);}
 .tabs{
   display:flex;
   gap:2px;
-  background:var(--navy-2);
+  background:var(--gray-dark);
   padding:0 24px;
   overflow-x:auto;
 }
@@ -75,7 +81,8 @@ a{color:var(--navy-2);}
   appearance:none;
   border:none;
   background:transparent;
-  color:#C9D6E8;
+  color:#E4E4E3;
+  font-family:inherit;
   font-size:13.5px;
   font-weight:600;
   padding:13px 16px;
@@ -86,7 +93,7 @@ a{color:var(--navy-2);}
 .tab-btn:hover{ color:#fff; }
 .tab-btn.active{
   color:#fff;
-  border-bottom-color:var(--gold);
+  border-bottom-color:var(--red);
 }
 
 main{ padding:22px 24px 56px; max-width:1180px; margin:0 auto; }
@@ -97,7 +104,8 @@ main{ padding:22px 24px 56px; max-width:1180px; margin:0 auto; }
 h2.panel-title{
   font-size:18px;
   margin:2px 0 4px;
-  color:var(--navy);
+  color:var(--text);
+  font-weight:700;
 }
 p.panel-desc{
   margin:0 0 18px;
@@ -117,12 +125,12 @@ p.panel-desc{
   border-radius:var(--radius);
   border:1px solid var(--border);
   padding:16px 18px;
-  border-top:3px solid var(--gold);
+  border-top:3px solid var(--red);
 }
 .kpi-value{
   font-size:28px;
   font-weight:700;
-  color:var(--navy);
+  color:var(--text);
   line-height:1.1;
 }
 .kpi-label{
@@ -146,7 +154,7 @@ p.panel-desc{
 .chart-card h3{
   font-size:13.5px;
   margin:0 0 10px;
-  color:var(--navy);
+  color:var(--text);
   font-weight:700;
 }
 .chart-card .canvas-wrap{ position:relative; height:230px; }
@@ -159,6 +167,7 @@ p.panel-desc{
   align-items:center;
   gap:10px;
   margin-bottom:10px;
+  flex-wrap:wrap;
 }
 .ranking-controls label{ font-size:12.5px; color:var(--text-muted); }
 .ranking-controls select{
@@ -174,7 +183,7 @@ p.panel-desc{
 /* ---------- Mapa tab ---------- */
 .map-layout{
   display:grid;
-  grid-template-columns:300px 1fr;
+  grid-template-columns:320px 1fr;
   gap:16px;
   align-items:start;
 }
@@ -187,27 +196,35 @@ p.panel-desc{
 .map-sidebar input[type="text"], .map-sidebar select{
   width:100%;
   font-family:inherit;
-  font-size:13px;
+  font-size:12.8px;
   padding:8px 10px;
   border-radius:6px;
   border:1px solid var(--border);
   margin-bottom:8px;
 }
+.filter-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.filter-grid select{ margin-bottom:0; }
+.filter-label{ font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.03em; margin:0 0 2px; }
 .intercambio-list{
-  max-height:430px;
+  max-height:360px;
   overflow-y:auto;
   border-top:1px solid var(--border);
+  margin-top:8px;
 }
 .intercambio-item{
   padding:9px 6px;
-  font-size:12.8px;
+  font-size:12.6px;
   border-bottom:1px solid var(--border);
   cursor:pointer;
   color:var(--text);
 }
-.intercambio-item:hover{ background:var(--navy-soft); }
+.intercambio-item:hover{ background:#FBEBEC; }
 .intercambio-item.active{
-  background:var(--navy);
+  background:var(--red);
   color:#fff;
   border-radius:6px;
 }
@@ -215,29 +232,30 @@ p.panel-desc{
   display:inline-block;
   font-size:10.5px;
   font-weight:700;
-  color:var(--navy-2);
-  background:var(--navy-soft);
+  color:var(--red-dark);
+  background:#FBEBEC;
   border-radius:4px;
   padding:1px 5px;
   margin-right:6px;
 }
 .intercambio-item.active .yr{
-  color:var(--navy);
-  background:var(--gold-light);
+  color:var(--red);
+  background:#fff;
 }
-.reset-btn{
+.reset-btn, .clear-filters-btn{
   width:100%;
-  margin-top:10px;
+  margin-top:8px;
   padding:8px 10px;
   border-radius:6px;
-  border:1px solid var(--navy);
+  border:1px solid var(--red);
   background:#fff;
-  color:var(--navy);
+  color:var(--red);
+  font-family:inherit;
   font-weight:600;
   font-size:12.5px;
   cursor:pointer;
 }
-.reset-btn:hover{ background:var(--navy-soft); }
+.reset-btn:hover, .clear-filters-btn:hover{ background:#FBEBEC; }
 
 .map-panel{
   background:var(--card);
@@ -250,17 +268,35 @@ p.panel-desc{
   justify-content:space-between;
   align-items:baseline;
   margin-bottom:4px;
+  gap:10px;
 }
-.map-panel-header h3{ margin:0; font-size:14px; color:var(--navy); }
-#map-context{ font-size:12px; color:var(--text-muted); max-width:60%; text-align:right;}
-#map-svg-wrap{ width:100%; }
-#map-svg-wrap svg{ width:100%; height:auto; display:block; }
+.map-panel-header h3{ margin:0; font-size:14px; color:var(--text); }
+#map-context{ font-size:12px; color:var(--text-muted); text-align:right;}
+#map-svg-wrap{ width:100%; position:relative; }
+#map-svg-wrap svg.main-map{ width:100%; height:auto; display:block; }
+.inset-box{
+  position:absolute;
+  right:6px;
+  bottom:6px;
+  width:26%;
+  min-width:90px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:4px;
+}
+.inset-box .inset-label{
+  font-size:9px;
+  color:var(--text-muted);
+  text-align:center;
+  margin-top:2px;
+}
 .dept-path{ stroke:#fff; stroke-width:0.7; cursor:default; transition:fill .15s; }
 .dept-path.highlight{ cursor:pointer; }
 .map-tooltip{
   position:absolute;
   pointer-events:none;
-  background:var(--navy);
+  background:var(--gray-dark);
   color:#fff;
   font-size:12px;
   padding:6px 9px;
@@ -277,6 +313,7 @@ p.panel-desc{
   font-size:11.5px;
   color:var(--text-muted);
   margin-top:8px;
+  flex-wrap:wrap;
 }
 .legend-swatch{ width:13px; height:13px; border-radius:3px; display:inline-block; }
 
@@ -286,61 +323,28 @@ p.panel-desc{
   padding-top:10px;
   font-size:12.8px;
 }
-.selection-detail h4{ margin:0 0 6px; font-size:13px; color:var(--navy); }
+.selection-detail h4{ margin:0 0 8px; font-size:14px; color:var(--text); }
+.detail-row{ margin-bottom:9px; }
+.detail-row .k{ font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted); margin-bottom:2px; }
+.detail-row .v{ font-size:12.8px; color:var(--text); }
 .dept-tag-list{ display:flex; flex-wrap:wrap; gap:6px; }
 .dept-tag{
-  background:var(--gold-light);
-  color:#5A4300;
+  background:#FBEBEC;
+  color:var(--red-dark);
   border-radius:5px;
   padding:3px 8px;
   font-size:11.8px;
   font-weight:600;
 }
-
-/* ---------- Guía tab ---------- */
-.guide{
-  background:var(--card);
+.etapa-tag{
+  display:inline-block;
+  background:var(--bg);
   border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:20px 24px;
-  font-size:13.5px;
+  border-radius:5px;
+  padding:3px 8px;
+  font-size:11.8px;
+  margin:0 6px 6px 0;
 }
-.guide h3{ color:var(--navy); font-size:15px; margin:22px 0 8px; }
-.guide h3:first-child{ margin-top:0; }
-.guide ol, .guide ul{ padding-left:20px; }
-.guide li{ margin-bottom:6px; }
-.guide code{
-  background:var(--navy-soft);
-  border-radius:4px;
-  padding:1px 6px;
-  font-size:12.5px;
-  color:var(--navy-2);
-}
-.guide .note{
-  background:#FDF6E3;
-  border-left:4px solid var(--gold);
-  padding:10px 14px;
-  border-radius:0 6px 6px 0;
-  margin:12px 0;
-  font-size:13px;
-}
-.dept-grid{
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:4px 14px;
-  background:var(--navy-soft);
-  border-radius:8px;
-  padding:12px 16px;
-  font-size:12.5px;
-  margin:10px 0;
-}
-.file-card{
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:12px 14px;
-  margin-bottom:10px;
-}
-.file-card b{ color:var(--navy); }
 
 footer{
   text-align:center;
@@ -358,7 +362,7 @@ footer{
 #boot-screen.hidden{ display:none; }
 .spinner{
   width:34px; height:34px; border-radius:50%;
-  border:3px solid var(--navy-soft); border-top-color:var(--navy);
+  border:3px solid var(--gray-light); border-top-color:var(--red);
   animation:spin 0.8s linear infinite;
 }
 @keyframes spin{ to{ transform:rotate(360deg); } }
@@ -366,20 +370,20 @@ footer{
   max-width:520px;
   background:#fff;
   border:1px solid var(--border);
-  border-left:4px solid #B3261E;
+  border-left:4px solid var(--red);
   border-radius:8px;
   padding:18px 22px;
   text-align:left;
   font-size:13.5px;
   display:none;
 }
-#boot-error h3{ margin-top:0; color:#B3261E; font-size:15px; }
+#boot-error h3{ margin-top:0; color:var(--red); font-size:15px; }
 
 @media (max-width: 880px){
   .kpi-grid{ grid-template-columns:1fr 1fr; }
   .chart-grid{ grid-template-columns:1fr; }
   .map-layout{ grid-template-columns:1fr; }
-  .dept-grid{ grid-template-columns:1fr 1fr; }
+  .filter-grid{ grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -392,16 +396,15 @@ footer{
     <h3>No se pudieron cargar los datos</h3>
     <p id="boot-error-msg"></p>
     <p>Si abriste este archivo haciendo doble clic desde tu computador, es probable que sea justamente ese el problema:
-    por seguridad, los navegadores no permiten que un archivo HTML local lea otros archivos locales (los CSV de datos).</p>
-    <p><b>Solución:</b> abre el tablero desde el enlace web donde está publicado (por ejemplo, GitHub Pages), no desde
-    el archivo en tu carpeta. Revisa la pestaña <b>«Cómo actualizar»</b> una vez cargue el tablero para más detalles.</p>
+    por seguridad, los navegadores no permiten que un archivo HTML local lea otros archivos locales (los CSV de datos).
+    Ábrelo desde el enlace web donde está publicado.</p>
   </div>
 </div>
 
 <header class="app-header">
-  <div class="eyebrow">APC Colombia · Dirección de Cooperación Internacional</div>
+  <div class="eyebrow">APC Colombia · Dirección de Coordinación Interinstitucional</div>
   <h1>COL-COL — Colombia Enseña Colombia</h1>
-  <div class="sub">Tablero de seguimiento de intercambios de experiencias entre territorios</div>
+  <div class="sub">Tablero de seguimiento</div>
   <div id="data-status"></div>
 </header>
 
@@ -409,7 +412,6 @@ footer{
   <button class="tab-btn active" data-tab="resumen">Resumen general</button>
   <button class="tab-btn" data-tab="mapa">Mapa interactivo</button>
   <button class="tab-btn" data-tab="cooperacion">Cooperación y temáticas</button>
-  <button class="tab-btn" data-tab="guia">Cómo actualizar</button>
 </nav>
 
 <main>
@@ -429,22 +431,55 @@ footer{
     <div class="chart-grid">
       <div class="chart-card"><h3>Intercambios por año</h3><div class="canvas-wrap"><canvas id="chart-intercambios-anio"></canvas></div></div>
       <div class="chart-card"><h3>Participantes por año</h3><div class="canvas-wrap"><canvas id="chart-participantes-anio"></canvas></div></div>
-      <div class="chart-card"><h3>Departamentos distintos por año</h3><div class="canvas-wrap"><canvas id="chart-departamentos-anio"></canvas></div></div>
-      <div class="chart-card"><h3>Municipios distintos por año</h3><div class="canvas-wrap"><canvas id="chart-municipios-anio"></canvas></div></div>
+      <div class="chart-card"><h3>Departamentos participantes por año</h3><div class="canvas-wrap"><canvas id="chart-departamentos-anio"></canvas></div></div>
+      <div class="chart-card"><h3>Municipios participantes por año</h3><div class="canvas-wrap"><canvas id="chart-municipios-anio"></canvas></div></div>
+
+      <div class="chart-card tall full">
+        <div class="ranking-controls">
+          <h3 style="margin:0;">Top departamentos por participación</h3>
+          <label for="filtro-anio-top-deptos">Año:</label>
+          <select id="filtro-anio-top-deptos"><option value="">Todos</option></select>
+        </div>
+        <div class="canvas-wrap"><canvas id="chart-top-departamentos"></canvas></div>
+      </div>
     </div>
   </section>
 
   <!-- ============ TAB: MAPA ============ -->
   <section class="tab-panel" id="tab-mapa">
     <h2 class="panel-title">Mapa interactivo</h2>
-    <p class="panel-desc">Elige un intercambio en la lista para iluminar en el mapa los departamentos que participaron en él. Sin selección, el mapa muestra la intensidad total de participación por departamento.</p>
+    <p class="panel-desc">Filtra o elige un intercambio en la lista para iluminar en el mapa los departamentos que participaron en él.</p>
 
     <div class="map-layout">
       <div class="map-sidebar">
         <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
-        <select id="map-year-filter">
-          <option value="">Todos los años</option>
-        </select>
+        <div class="filter-grid">
+          <div>
+            <div class="filter-label">Año</div>
+            <select id="filtro-anio"><option value="">Todos</option></select>
+          </div>
+          <div>
+            <div class="filter-label">Departamento</div>
+            <select id="filtro-departamento"><option value="">Todos</option></select>
+          </div>
+          <div>
+            <div class="filter-label">Temática</div>
+            <select id="filtro-tematica"><option value="">Todas</option></select>
+          </div>
+          <div>
+            <div class="filter-label">ODS</div>
+            <select id="filtro-ods"><option value="">Todos</option></select>
+          </div>
+          <div>
+            <div class="filter-label">Cooperante</div>
+            <select id="filtro-cooperante"><option value="">Todos</option></select>
+          </div>
+          <div>
+            <div class="filter-label">Entidad socia</div>
+            <select id="filtro-entidad"><option value="">Todas</option></select>
+          </div>
+        </div>
+        <button class="clear-filters-btn" id="clear-filters">Limpiar filtros</button>
         <div class="intercambio-list" id="intercambio-list"></div>
         <button class="reset-btn" id="map-reset">Ver mapa general (todos los intercambios)</button>
       </div>
@@ -456,10 +491,7 @@ footer{
         </div>
         <div id="map-svg-wrap"></div>
         <div class="map-legend" id="map-legend"></div>
-        <div class="selection-detail" id="selection-detail" style="display:none;">
-          <h4 id="selection-name"></h4>
-          <div class="dept-tag-list" id="selection-depts"></div>
-        </div>
+        <div class="selection-detail" id="selection-detail" style="display:none;"></div>
       </div>
     </div>
   </section>
@@ -470,8 +502,23 @@ footer{
     <p class="panel-desc">Principales ejes temáticos, ODS, cooperantes y entidades socias nacionales del programa.</p>
 
     <div class="chart-grid">
-      <div class="chart-card tall"><h3>Temáticas principales (eje SEGIB)</h3><div class="canvas-wrap"><canvas id="chart-tematicas"></canvas></div></div>
-      <div class="chart-card tall"><h3>ODS principales</h3><div class="canvas-wrap"><canvas id="chart-ods"></canvas></div></div>
+      <div class="chart-card tall full">
+        <div class="ranking-controls">
+          <h3 style="margin:0;">Temáticas principales (eje SEGIB)</h3>
+          <label for="filtro-anio-tematicas">Año:</label>
+          <select id="filtro-anio-tematicas"><option value="">Todos</option></select>
+        </div>
+        <div class="canvas-wrap"><canvas id="chart-tematicas"></canvas></div>
+      </div>
+
+      <div class="chart-card tall full">
+        <div class="ranking-controls">
+          <h3 style="margin:0;">ODS principales</h3>
+          <label for="filtro-anio-ods">Año:</label>
+          <select id="filtro-anio-ods"><option value="">Todos</option></select>
+        </div>
+        <div class="canvas-wrap"><canvas id="chart-ods"></canvas></div>
+      </div>
 
       <div class="chart-card tall full">
         <div class="ranking-controls">
@@ -493,80 +540,6 @@ footer{
     </div>
   </section>
 
-  <!-- ============ TAB: GUIA ============ -->
-  <section class="tab-panel" id="tab-guia">
-    <h2 class="panel-title">Cómo actualizar este tablero</h2>
-    <p class="panel-desc">Guía para agregar un nuevo intercambio sin tocar el diseño ni el código.</p>
-
-    <div class="guide">
-      <h3>La idea general</h3>
-      <p>Este tablero no guarda datos por sí mismo: cada vez que alguien lo abre, lee cuatro archivos de datos
-      (formato <code>.csv</code>, que se abren directamente en Excel) guardados en la carpeta <code>data</code>.
-      Para agregar un intercambio nuevo, solo hay que agregar filas a esos archivos — nunca hay que tocar
-      <code>index.html</code>.</p>
-
-      <div class="note">Cada intercambio tiene un <b>CODIGO</b> único (por ejemplo <code>COL075</code>) que lo conecta
-      en los cuatro archivos. Al agregar un intercambio nuevo, usa el siguiente número disponible y escribe
-      <b>exactamente el mismo CODIGO</b> en cada archivo donde ese intercambio aparezca.</div>
-
-      <h3>Los 4 archivos y qué va en cada uno</h3>
-
-      <div class="file-card">
-        <b>registro.csv</b> — una fila por intercambio.<br>
-        Columnas: <code>CODIGO</code>, <code>AÑO</code>, <code>NOMBRE DEL INTERCAMBIO</code>,
-        <code>EJE TEMATICO</code>, <code>ODS PRINCIPAL</code>, <code>ORIGEN COOPERANTE</code>,
-        <code>COOPERANTE PRINCIPAL</code>.
-      </div>
-
-      <div class="file-card">
-        <b>etapas.csv</b> — una fila por cada etapa del intercambio (algunos tienen una sola etapa
-        «Único encuentro»; otros tienen «Apertura» y «Seguimiento/Cierre» por separado).<br>
-        Columnas: <code>CODIGO</code>, <code>ETAPA</code>, <code>DEPARTAMENTO SEDE</code>,
-        <code>MUNICIPIO SEDE</code>, <code>PARTICIPANTES</code> (número de personas en esa etapa).
-      </div>
-
-      <div class="file-card">
-        <b>departamentos.csv</b> — una fila por cada departamento (y municipio) que participó, sin importar
-        si fue sede o no. Si un intercambio tuvo participantes de 6 departamentos, van 6 filas con el mismo CODIGO.<br>
-        Columnas: <code>CODIGO</code>, <code>ETAPA</code>, <code>DEPARTAMENTO</code>, <code>MUNICIPIO</code>.<br>
-        <b>Este archivo es el que alimenta el mapa</b> — por eso el nombre del departamento debe coincidir
-        exactamente con uno de los 33 nombres válidos (lista abajo). Un nombre mal escrito simplemente no se
-        iluminará en el mapa.
-      </div>
-
-      <div class="file-card">
-        <b>entidades.csv</b> — una fila por cada entidad socia nacional que participó en cada etapa.<br>
-        Columnas: <code>CODIGO</code>, <code>ETAPA</code>, <code>ENTIDAD SOCIA NACIONAL</code>.
-      </div>
-
-      <h3>Nombres de departamento válidos (cópialos tal cual)</h3>
-      <div class="dept-grid" id="dept-name-list"></div>
-
-      <h3>Pasos para agregar un intercambio nuevo</h3>
-      <ol>
-        <li>Abre los 4 archivos <code>.csv</code> en Excel (clic derecho → Abrir con → Excel).</li>
-        <li>Agrega las filas correspondientes en cada archivo, usando el mismo CODIGO nuevo en todos.</li>
-        <li>Guarda cada archivo con <b>Archivo → Guardar como → CSV UTF-8 (delimitado por comas)</b>, conservando
-        el mismo nombre y reemplazando el archivo anterior.</li>
-        <li>Sube los archivos reemplazados al lugar donde está publicado el tablero (ver siguiente sección).</li>
-        <li>Recarga la página del tablero — los cambios aparecen automáticamente, no hace falta tocar nada más.</li>
-      </ol>
-
-      <h3>Nota técnica: por qué este archivo debe abrirse desde un enlace, no con doble clic</h3>
-      <p>Por seguridad, los navegadores (Chrome, Edge) bloquean que un archivo HTML abierto directamente desde el
-      computador («file://…») lea otros archivos locales, como los CSV de datos. Si alguien hace doble clic sobre
-      <code>index.html</code>, el tablero se verá en blanco o con un mensaje de error.</p>
-      <p>La forma más simple y permanente de resolverlo es publicar la carpeta completa (incluida la carpeta
-      <code>data</code>) en <b>GitHub Pages</b> — gratis y sin mantenimiento:</p>
-      <ol>
-        <li>Crea (o usa) un repositorio en GitHub y sube la carpeta completa (<code>index.html</code> + carpeta <code>data</code>).</li>
-        <li>Ve a <b>Settings → Pages</b> del repositorio, y en «Source» selecciona la rama principal.</li>
-        <li>GitHub entrega un enlace público (algo como <code>https://usuario.github.io/repositorio/</code>) — ese es el enlace que se comparte con el equipo.</li>
-        <li>Para actualizar los datos más adelante, basta con reemplazar el CSV correspondiente dentro del repositorio (GitHub permite subir el archivo nuevo directamente desde el navegador, sin necesidad de saber Git).</li>
-      </ol>
-    </div>
-  </section>
-
 </main>
 
 <footer>Agencia Presidencial de Cooperación Internacional de Colombia — APC Colombia</footer>
@@ -584,6 +557,8 @@ const FILES = {
   geo: 'data/colombia_departamentos.json'
 };
 
+const SAN_ANDRES_DPTO = '88';
+
 // Cruce nombre de departamento (tal como aparece en departamentos.csv) -> código DANE usado en el geojson
 const DEPT_TO_DPTO = {
   'Amazonas':'91','Antioquia':'05','Arauca':'81','Atlántico':'08','Bogotá D.C.':'11',
@@ -593,19 +568,25 @@ const DEPT_TO_DPTO = {
   'Putumayo':'86','Quindío':'63','Risaralda':'66','San Andrés y Providencia':'88','Santander':'68',
   'Sucre':'70','Tolima':'73','Valle del Cauca':'76','Vaupes':'97','Vichada':'99'
 };
-const DEPT_NAMES = Object.keys(DEPT_TO_DPTO).sort((a,b)=>a.localeCompare(b,'es'));
+const DPTO_TO_DEPT = Object.fromEntries(Object.entries(DEPT_TO_DPTO).map(([k,v]) => [v,k]));
 
-const NAVY = '#0B2A52';
-const NAVY_SOFT = 'rgba(11,42,82,0.12)';
-const GOLD = '#C9962B';
-const MAP_EMPTY = '#DCE1E8';
+// Paleta institucional APC Colombia (manual de imagen): rojo + grises, con matices para variedad
+const PALETTE = {
+  red: '#C4171F',
+  redDark: '#8C1015',
+  redSoft: '#D9636A',
+  grayDark: '#575756',
+  grayMid: '#9D9C9C',
+  grayLight: '#C9C9C8'
+};
+const MAP_EMPTY = '#E3E3E2';
 
-let DATA = {};       // { registro, etapas, departamentos, entidades, geo }
-let CHARTS = {};      // referencias a instancias Chart.js, para poder destruir/actualizar
-let mapProjection, mapPath;
+let DATA = {};
+let CHARTS = {};
 
 /* ---------------- Utilidades ---------------- */
 function norm(s){ return (s || '').toString().trim(); }
+function uniqueSorted(arr){ return [...new Set(arr.filter(Boolean))].sort((a,b) => a.localeCompare(b,'es')); }
 
 function buildCodToYear(registro){
   const map = {};
@@ -704,11 +685,13 @@ function departamentosDeIntercambio(departamentos, codigo){
   });
   return byDept;
 }
-function intercambiosPorDepartamento(departamentos){
+function intercambiosPorDepartamento(departamentos, registro, year){
+  const codToYear = buildCodToYear(registro);
   const byDept = {}; const seen = new Set();
   departamentos.forEach(r => {
     const dept = norm(r['DEPARTAMENTO']);
     if (!dept) return;
+    if (year && String(codToYear[r['CODIGO']]) !== String(year)) return;
     const key = r['CODIGO'] + '|' + dept;
     if (seen.has(key)) return;
     seen.add(key);
@@ -773,6 +756,7 @@ function initApp(){
 
   renderKpis();
   renderYearCharts(years);
+  renderTopDepartamentos(years);
   renderCooperacion(years);
   setupMap(years);
 }
@@ -797,7 +781,7 @@ function renderKpis(){
   document.getElementById('kpi-municipios').textContent = k.totalMunicipios.toLocaleString('es-CO');
 }
 
-function barChart(canvasId, labels, values, {horizontal=false, color=NAVY} = {}){
+function barChart(canvasId, labels, values, {horizontal=false, color=PALETTE.red} = {}){
   const ctx = document.getElementById(canvasId);
   if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
   CHARTS[canvasId] = new Chart(ctx, {
@@ -807,10 +791,10 @@ function barChart(canvasId, labels, values, {horizontal=false, color=NAVY} = {})
       indexAxis: horizontal ? 'y' : 'x',
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: {} } },
+      plugins: { legend: { display: false } },
       scales: {
-        x: { grid: { display: !horizontal, color: '#EEF1F5' }, ticks: { font: { size: 11 } } },
-        y: { grid: { display: horizontal, color: '#EEF1F5' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+        x: { grid: { display: !horizontal, color: '#EFEFEE' }, ticks: { font: { size: 11 } } },
+        y: { grid: { display: horizontal, color: '#EFEFEE' }, ticks: { font: { size: 11 } }, beginAtZero: true }
       }
     }
   });
@@ -821,16 +805,30 @@ function renderYearCharts(years){
   const yearLabels = years.map(String);
 
   const iXA = intercambiosPorAnio(DATA.registro);
-  barChart('chart-intercambios-anio', yearLabels, yearLabels.map(y => iXA[y] || 0));
+  barChart('chart-intercambios-anio', yearLabels, yearLabels.map(y => iXA[y] || 0), { color: PALETTE.red });
 
   const pXA = participantesPorAnio(DATA.registro, DATA.etapas);
-  barChart('chart-participantes-anio', yearLabels, yearLabels.map(y => pXA[y] || 0));
+  barChart('chart-participantes-anio', yearLabels, yearLabels.map(y => pXA[y] || 0), { color: PALETTE.grayDark });
 
   const dXA = departamentosPorAnio(DATA.registro, DATA.departamentos);
-  barChart('chart-departamentos-anio', yearLabels, yearLabels.map(y => dXA[y] || 0));
+  barChart('chart-departamentos-anio', yearLabels, yearLabels.map(y => dXA[y] || 0), { color: PALETTE.redSoft });
 
   const mXA = municipiosPorAnio(DATA.registro, DATA.departamentos);
-  barChart('chart-municipios-anio', yearLabels, yearLabels.map(y => mXA[y] || 0));
+  barChart('chart-municipios-anio', yearLabels, yearLabels.map(y => mXA[y] || 0), { color: PALETTE.grayMid });
+}
+
+function renderTopDepartamentos(years){
+  const sel = document.getElementById('filtro-anio-top-deptos');
+  years.forEach(y => sel.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`));
+
+  function update(){
+    const year = sel.value || null;
+    const counts = intercambiosPorDepartamento(DATA.departamentos, DATA.registro, year);
+    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+    barChart('chart-top-departamentos', sorted.map(p => p[0]), sorted.map(p => p[1]), { horizontal: true, color: PALETTE.redDark });
+  }
+  sel.addEventListener('change', update);
+  update();
 }
 
 /* ---------------- Tab: Cooperación ---------------- */
@@ -840,48 +838,75 @@ function topN(pairs, n){
 }
 
 function renderCooperacion(years){
-  const tem = topN(ranking(DATA.registro, 'EJE TEMATICO'), 10);
-  barChart('chart-tematicas', tem.labels, tem.values, { horizontal: true, color: NAVY });
-
-  const ods = topN(ranking(DATA.registro, 'ODS PRINCIPAL'), 10);
-  barChart('chart-ods', ods.labels, ods.values, { horizontal: true, color: NAVY });
-
-  // selects de año para cooperantes / entidades
+  const selTem = document.getElementById('filtro-anio-tematicas');
+  const selOds = document.getElementById('filtro-anio-ods');
   const selCoop = document.getElementById('filtro-anio-cooperantes');
   const selEnt = document.getElementById('filtro-anio-entidades');
-  years.forEach(y => {
-    selCoop.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`);
-    selEnt.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`);
+  [selTem, selOds, selCoop, selEnt].forEach(sel => {
+    years.forEach(y => sel.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`));
   });
 
+  function updateTematicas(){
+    const y = selTem.value || null;
+    const r = topN(ranking(DATA.registro, 'EJE TEMATICO', { year: y }), 10);
+    barChart('chart-tematicas', r.labels, r.values, { horizontal: true, color: PALETTE.red });
+  }
+  function updateOds(){
+    const y = selOds.value || null;
+    const r = topN(ranking(DATA.registro, 'ODS PRINCIPAL', { year: y }), 10);
+    barChart('chart-ods', r.labels, r.values, { horizontal: true, color: PALETTE.grayDark });
+  }
   function updateCooperantes(){
     const y = selCoop.value || null;
     const r = topN(ranking(DATA.registro, 'COOPERANTE PRINCIPAL', { year: y }), 10);
-    barChart('chart-cooperantes', r.labels, r.values, { horizontal: true, color: GOLD });
+    barChart('chart-cooperantes', r.labels, r.values, { horizontal: true, color: PALETTE.redSoft });
   }
   function updateEntidades(){
     const y = selEnt.value || null;
     const r = topN(rankingEntidades(DATA.entidades, DATA.registro, { year: y }), 10);
-    barChart('chart-entidades', r.labels, r.values, { horizontal: true, color: GOLD });
+    barChart('chart-entidades', r.labels, r.values, { horizontal: true, color: PALETTE.grayMid });
   }
+  selTem.addEventListener('change', updateTematicas);
+  selOds.addEventListener('change', updateOds);
   selCoop.addEventListener('change', updateCooperantes);
   selEnt.addEventListener('change', updateEntidades);
-  updateCooperantes();
-  updateEntidades();
+  updateTematicas(); updateOds(); updateCooperantes(); updateEntidades();
 }
 
 /* ---------------- Tab: Mapa ---------------- */
 function setupMap(years){
-  // filtro de año
-  const yearSel = document.getElementById('map-year-filter');
-  years.forEach(y => yearSel.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`));
+  const filtroAnio = document.getElementById('filtro-anio');
+  const filtroDepto = document.getElementById('filtro-departamento');
+  const filtroTematica = document.getElementById('filtro-tematica');
+  const filtroOds = document.getElementById('filtro-ods');
+  const filtroCooperante = document.getElementById('filtro-cooperante');
+  const filtroEntidad = document.getElementById('filtro-entidad');
+
+  years.forEach(y => filtroAnio.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`));
+  uniqueSorted(DATA.departamentos.map(r => r['DEPARTAMENTO'])).forEach(d =>
+    filtroDepto.insertAdjacentHTML('beforeend', `<option value="${d}">${d}</option>`));
+  uniqueSorted(DATA.registro.map(r => r['EJE TEMATICO'])).forEach(t =>
+    filtroTematica.insertAdjacentHTML('beforeend', `<option value="${t.replace(/"/g,'&quot;')}">${t}</option>`));
+  uniqueSorted(DATA.registro.map(r => r['ODS PRINCIPAL'])).forEach(o =>
+    filtroOds.insertAdjacentHTML('beforeend', `<option value="${o.replace(/"/g,'&quot;')}">${o}</option>`));
+  uniqueSorted(DATA.registro.map(r => r['COOPERANTE PRINCIPAL'])).forEach(c =>
+    filtroCooperante.insertAdjacentHTML('beforeend', `<option value="${c.replace(/"/g,'&quot;')}">${c}</option>`));
+  uniqueSorted(DATA.entidades.map(r => r['ENTIDAD SOCIA NACIONAL']).filter(v => norm(v).toLowerCase() !== 'no registra')).forEach(e =>
+    filtroEntidad.insertAdjacentHTML('beforeend', `<option value="${e.replace(/"/g,'&quot;')}">${e}</option>`));
 
   renderMapSvg();
   colorMapDefault();
   renderIntercambioList();
 
+  [filtroAnio, filtroDepto, filtroTematica, filtroOds, filtroCooperante, filtroEntidad].forEach(sel => {
+    sel.addEventListener('change', renderIntercambioList);
+  });
   document.getElementById('map-search').addEventListener('input', renderIntercambioList);
-  yearSel.addEventListener('change', renderIntercambioList);
+  document.getElementById('clear-filters').addEventListener('click', () => {
+    document.getElementById('map-search').value = '';
+    [filtroAnio, filtroDepto, filtroTematica, filtroOds, filtroCooperante, filtroEntidad].forEach(sel => sel.value = '');
+    renderIntercambioList();
+  });
   document.getElementById('map-reset').addEventListener('click', () => {
     document.querySelectorAll('.intercambio-item').forEach(el => el.classList.remove('active'));
     document.getElementById('selection-detail').style.display = 'none';
@@ -891,26 +916,64 @@ function setupMap(years){
   });
 }
 
+function allDeptPaths(){
+  return d3.select('#map-svg-wrap').selectAll('path.dept-path');
+}
+
 function renderMapSvg(){
   const wrap = document.getElementById('map-svg-wrap');
+  wrap.innerHTML = '';
   const width = wrap.clientWidth || 520;
-  const height = width * 0.95;
+  const height = width * 0.92;
+
+  // El archipiélago de San Andrés queda muy lejos del resto del país: si se incluye
+  // en el ajuste general del mapa, el continente se encoge y la isla se ve como un
+  // punto casi invisible. Por eso se dibuja aparte, en un recuadro (inset), como es
+  // convención cartográfica habitual para Colombia.
+  const mainlandFeatures = DATA.geo.features.filter(f => f.properties.DPTO !== SAN_ANDRES_DPTO);
+  const sanAndresFeature = DATA.geo.features.find(f => f.properties.DPTO === SAN_ANDRES_DPTO);
 
   const svg = d3.select(wrap).append('svg')
+    .attr('class', 'main-map')
     .attr('viewBox', `0 0 ${width} ${height}`);
 
-  mapProjection = d3.geoMercator().fitSize([width, height], DATA.geo);
-  mapPath = d3.geoPath().projection(mapProjection);
-
-  const tooltip = d3.select(wrap).append('div').attr('class', 'map-tooltip');
+  const projection = d3.geoMercator().fitSize([width, height], { type: 'FeatureCollection', features: mainlandFeatures });
+  const path = d3.geoPath().projection(projection);
 
   svg.selectAll('path.dept-path')
-    .data(DATA.geo.features)
+    .data(mainlandFeatures)
     .enter()
     .append('path')
     .attr('class', 'dept-path')
-    .attr('d', mapPath)
-    .attr('data-dpto', d => d.properties.DPTO)
+    .attr('d', path)
+    .attr('data-dpto', d => d.properties.DPTO);
+
+  // Recuadro (inset) para San Andrés y Providencia
+  if (sanAndresFeature) {
+    const insetBox = document.createElement('div');
+    insetBox.className = 'inset-box';
+    wrap.appendChild(insetBox);
+    const insetW = Math.max(70, width * 0.24);
+    const insetH = insetW * 0.8;
+    const insetSvg = d3.select(insetBox).append('svg')
+      .attr('viewBox', `0 0 ${insetW} ${insetH}`)
+      .style('width', '100%')
+      .style('height', 'auto')
+      .style('display', 'block');
+    const insetProjection = d3.geoMercator().fitSize([insetW - 8, insetH - 8], sanAndresFeature);
+    const insetPath = d3.geoPath().projection(insetProjection);
+    insetSvg.append('g').attr('transform', 'translate(4,4)')
+      .append('path')
+      .datum(sanAndresFeature)
+      .attr('class', 'dept-path')
+      .attr('d', insetPath(sanAndresFeature))
+      .attr('data-dpto', SAN_ANDRES_DPTO);
+    insetBox.insertAdjacentHTML('beforeend', '<div class="inset-label">San Andrés y Providencia</div>');
+  }
+
+  // tooltip + eventos (aplica a mapa principal e inset)
+  const tooltip = d3.select(wrap).append('div').attr('class', 'map-tooltip');
+  allDeptPaths()
     .on('mousemove', function(event, d){
       const rect = wrap.getBoundingClientRect();
       const info = d._info || '';
@@ -923,35 +986,35 @@ function renderMapSvg(){
 }
 
 function deptColorScale(maxVal){
-  return d3.scaleLinear().domain([0, maxVal || 1]).range(['#D8E1EE', NAVY]);
+  return d3.scaleLinear().domain([0, maxVal || 1]).range(['#EDEDEC', PALETTE.grayDark]);
 }
 
 function colorMapDefault(){
-  const counts = intercambiosPorDepartamento(DATA.departamentos);
+  const counts = intercambiosPorDepartamento(DATA.departamentos, DATA.registro, null);
   const maxVal = Math.max(1, ...Object.values(counts));
   const scale = deptColorScale(maxVal);
 
-  d3.select('#map-svg-wrap').selectAll('path.dept-path')
+  allDeptPaths()
     .classed('highlight', false)
     .each(function(d){
-      const name = Object.keys(DEPT_TO_DPTO).find(n => DEPT_TO_DPTO[n] === d.properties.DPTO);
+      const name = DPTO_TO_DEPT[d.properties.DPTO];
       const c = (name && counts[name]) || 0;
       d._info = name ? `<b>${name}</b><br>${c} intercambio(s)` : '';
       d3.select(this).attr('fill', c ? scale(c) : MAP_EMPTY);
     });
 
   document.getElementById('map-legend').innerHTML = `
-    <span class="legend-swatch" style="background:#D8E1EE"></span> menos intercambios
-    <span class="legend-swatch" style="background:${NAVY}; margin-left:6px;"></span> más intercambios`;
+    <span class="legend-swatch" style="background:#EDEDEC"></span> menos intercambios
+    <span class="legend-swatch" style="background:${PALETTE.grayDark}; margin-left:6px;"></span> más intercambios`;
 }
 
 function colorMapSelection(codigo, nombre){
   const byDept = departamentosDeIntercambio(DATA.departamentos, codigo);
   const deptNames = Object.keys(byDept);
 
-  d3.select('#map-svg-wrap').selectAll('path.dept-path')
+  allDeptPaths()
     .each(function(d){
-      const name = Object.keys(DEPT_TO_DPTO).find(n => DEPT_TO_DPTO[n] === d.properties.DPTO);
+      const name = DPTO_TO_DEPT[d.properties.DPTO];
       const participo = name && byDept[name];
       let info = name || '';
       if (participo && byDept[name].size){
@@ -959,38 +1022,111 @@ function colorMapSelection(codigo, nombre){
       }
       d._info = participo ? info : '';
       d3.select(this)
-        .attr('fill', participo ? GOLD : MAP_EMPTY)
+        .attr('fill', participo ? PALETTE.red : MAP_EMPTY)
         .classed('highlight', !!participo);
     });
 
   document.getElementById('map-legend').innerHTML = `
-    <span class="legend-swatch" style="background:${GOLD}"></span> departamento participante
-    <span class="legend-swatch" style="background:var(--map-empty); margin-left:6px;"></span> no participó`;
+    <span class="legend-swatch" style="background:${PALETTE.red}"></span> departamento participante
+    <span class="legend-swatch" style="background:${MAP_EMPTY}; margin-left:6px;"></span> no participó`;
 
   document.getElementById('map-title').textContent = nombre;
   document.getElementById('map-context').textContent = deptNames.length + ' departamento(s) participante(s)';
 
+  renderDetallePanel(codigo, deptNames);
+}
+
+function renderDetallePanel(codigo, deptNames){
+  const reg = DATA.registro.find(r => r['CODIGO'] === codigo) || {};
+  const etapasList = DATA.etapas.filter(r => r['CODIGO'] === codigo);
+  const entidadesList = DATA.entidades.filter(r => r['CODIGO'] === codigo);
+
+  const etapasHtml = etapasList.map(e =>
+    `<span class="etapa-tag"><b>${norm(e['ETAPA'])}</b> — ${norm(e['DEPARTAMENTO SEDE'])}${norm(e['MUNICIPIO SEDE']) ? ', ' + norm(e['MUNICIPIO SEDE']) : ''} · ${norm(e['PARTICIPANTES'])} participantes</span>`
+  ).join('') || '<span class="v">Sin registro de etapas.</span>';
+
+  const entidadPrincipal = uniqueSorted(entidadesList.map(e => e['ENTIDAD SOCIA NACIONAL']).filter(v => norm(v).toLowerCase() !== 'no registra'));
+  const otrasEntidades = uniqueSorted(entidadesList.map(e => e['OTRAS ENTIDADES SOCIAS']));
+
+  function row(label, value){
+    if (!norm(value)) return '';
+    return `<div class="detail-row"><div class="k">${label}</div><div class="v">${value}</div></div>`;
+  }
+
+  const html = `
+    <h4>${norm(reg['NOMBRE DEL INTERCAMBIO']) || codigo}</h4>
+    <div class="detail-row"><div class="k">Departamentos participantes</div>
+      <div class="dept-tag-list">${deptNames.map(n => `<span class="dept-tag">${n}</span>`).join('') || '<span class="v">No registrado.</span>'}</div>
+    </div>
+    ${row('Etapas realizadas', etapasHtml)}
+    ${row('Objetivo del intercambio', norm(reg['OBJETIVO']))}
+    ${row('Buena práctica', norm(reg['BUENA PRACTICA']))}
+    ${row('Territorio de la buena práctica', norm(reg['TERRITORIO BUENA PRACTICA']))}
+    ${row('Cooperante', [norm(reg['COOPERANTE PRINCIPAL']), norm(reg['ORIGEN COOPERANTE'])].filter(Boolean).join(' · '))}
+    ${row('Entidad socia nacional', entidadPrincipal.join(', '))}
+    ${row('Otras entidades socias', otrasEntidades.join(', '))}
+  `;
+
   const detail = document.getElementById('selection-detail');
   detail.style.display = 'block';
-  document.getElementById('selection-name').textContent = 'Departamentos participantes';
-  document.getElementById('selection-depts').innerHTML =
-    deptNames.map(n => `<span class="dept-tag">${n}</span>`).join('');
+  detail.innerHTML = html;
+}
+
+function passesFilters(r, {q, year, depto, tematica, ods, cooperante, entidad, deptSet}){
+  if (year && String(r['AÑO']) !== String(year)) return false;
+  if (q && !norm(r['NOMBRE DEL INTERCAMBIO']).toLowerCase().includes(q)) return false;
+  if (tematica && norm(r['EJE TEMATICO']) !== tematica) return false;
+  if (ods && norm(r['ODS PRINCIPAL']) !== ods) return false;
+  if (cooperante && norm(r['COOPERANTE PRINCIPAL']) !== cooperante) return false;
+  if (depto && !(deptSet[r['CODIGO']] && deptSet[r['CODIGO']].has(depto))) return false;
+  if (entidad && !(entidad in (r._entidadSet || {}))) return false;
+  return true;
 }
 
 function renderIntercambioList(){
   const q = norm(document.getElementById('map-search').value).toLowerCase();
-  const yearFilter = document.getElementById('map-year-filter').value;
+  const year = document.getElementById('filtro-anio').value;
+  const depto = document.getElementById('filtro-departamento').value;
+  const tematica = document.getElementById('filtro-tematica').value;
+  const ods = document.getElementById('filtro-ods').value;
+  const cooperante = document.getElementById('filtro-cooperante').value;
+  const entidad = document.getElementById('filtro-entidad').value;
   const list = document.getElementById('intercambio-list');
 
+  // codigo -> set de departamentos (para filtro por departamento)
+  const deptSet = {};
+  DATA.departamentos.forEach(r => {
+    const d = norm(r['DEPARTAMENTO']);
+    if (!d) return;
+    if (!deptSet[r['CODIGO']]) deptSet[r['CODIGO']] = new Set();
+    deptSet[r['CODIGO']].add(d);
+  });
+  // codigo -> set de entidades socias (para filtro por entidad)
+  const entSet = {};
+  DATA.entidades.forEach(r => {
+    const e = norm(r['ENTIDAD SOCIA NACIONAL']);
+    if (!e) return;
+    if (!entSet[r['CODIGO']]) entSet[r['CODIGO']] = new Set();
+    entSet[r['CODIGO']].add(e);
+  });
+
   const rows = DATA.registro
-    .filter(r => !yearFilter || String(r['AÑO']) === String(yearFilter))
-    .filter(r => !q || norm(r['NOMBRE DEL INTERCAMBIO']).toLowerCase().includes(q))
+    .filter(r => {
+      if (year && String(r['AÑO']) !== String(year)) return false;
+      if (q && !norm(r['NOMBRE DEL INTERCAMBIO']).toLowerCase().includes(q)) return false;
+      if (tematica && norm(r['EJE TEMATICO']) !== tematica) return false;
+      if (ods && norm(r['ODS PRINCIPAL']) !== ods) return false;
+      if (cooperante && norm(r['COOPERANTE PRINCIPAL']) !== cooperante) return false;
+      if (depto && !(deptSet[r['CODIGO']] && deptSet[r['CODIGO']].has(depto))) return false;
+      if (entidad && !(entSet[r['CODIGO']] && entSet[r['CODIGO']].has(entidad))) return false;
+      return true;
+    })
     .sort((a,b) => b['AÑO'] - a['AÑO'] || norm(a['NOMBRE DEL INTERCAMBIO']).localeCompare(norm(b['NOMBRE DEL INTERCAMBIO']),'es'));
 
   list.innerHTML = rows.map(r => `
     <div class="intercambio-item" data-codigo="${r['CODIGO']}" data-nombre="${norm(r['NOMBRE DEL INTERCAMBIO']).replace(/"/g,'&quot;')}">
       <span class="yr">${r['AÑO']}</span>${norm(r['NOMBRE DEL INTERCAMBIO'])}
-    </div>`).join('') || '<div style="padding:12px; color:var(--text-muted); font-size:12.5px;">Sin resultados.</div>';
+    </div>`).join('') || '<div style="padding:12px; color:var(--text-muted); font-size:12.5px;">Sin resultados con estos filtros.</div>';
 
   list.querySelectorAll('.intercambio-item').forEach(el => {
     el.addEventListener('click', () => {
@@ -1001,20 +1137,10 @@ function renderIntercambioList(){
   });
 }
 
-/* ---------------- Guía: lista de departamentos válidos ---------------- */
-function renderDeptGuide(){
-  document.getElementById('dept-name-list').innerHTML =
-    DEPT_NAMES.map(n => `<div>${n}</div>`).join('');
-}
-
 /* ---------------- Arranque ---------------- */
-window.addEventListener('DOMContentLoaded', () => {
-  renderDeptGuide();
-  boot();
-});
+window.addEventListener('DOMContentLoaded', boot);
 window.addEventListener('resize', () => {
   if (DATA.geo) {
-    document.getElementById('map-svg-wrap').innerHTML = '';
     renderMapSvg();
     const activeItem = document.querySelector('.intercambio-item.active');
     if (activeItem) colorMapSelection(activeItem.dataset.codigo, activeItem.dataset.nombre);
