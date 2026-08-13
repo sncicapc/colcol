@@ -1,0 +1,122 @@
+﻿CODIGO,ETAPA,DEPARTAMENTO SEDE,MUNICIPIO SEDE,PARTICIPANTES
+COL001,Unico encuentro,Meta,Villavicencio,34
+COL002,Unico encuentro,Antioquia,Necoclí,33
+COL003,Unico encuentro,Putumayo,Puerto Asís,32
+COL004,Unico encuentro,Cesar,Valledupar,38
+COL005,Unico encuentro,Casanare,Chámeza; Recetor,46
+COL006,Unico encuentro,Risaralda,Pereira,21
+COL007,Apertura,Risaralda,Belén de Umbría,30
+COL007,Seguimiento/Cierre,Risaralda,Belén de Umbría,20
+COL008,Unico encuentro,Caquetá,Florencia,50
+COL009,Unico encuentro,Chocó,Bahía Solano; Nuquí,19
+COL010,Unico encuentro,Nariño,Pasto,28
+COL011,Unico encuentro,Bolívar,Montes de María,15
+COL012,Unico encuentro,Huila,Neiva,47
+COL013,Apertura,Antioquia,Apartadó,59
+COL013,Seguimiento/Cierre,Córdoba,Montelibano,63
+COL014,Unico encuentro,Norte de Santander,Cúcuta,24
+COL015,Unico encuentro,Risaralda,Belén de Umbría,33
+COL016,Unico encuentro,Putumayo,Puerto Asís,25
+COL017,Unico encuentro,Bolívar,Cartagena de Indias,26
+COL018,Unico encuentro,Boyacá,San Pablo de Borbur,23
+COL019,Unico encuentro,Tolima,Ibagué,35
+COL020,Unico encuentro,Meta,Granada,34
+COL021,Unico encuentro,Nariño,Pasto,24
+COL022,Unico encuentro,Córdoba,Valencia,21
+COL023,Unico encuentro,Chocó,Quibdó; Nuquí,21
+COL024,Unico encuentro,Antioquia,Medellín,25
+COL025,Unico encuentro,Meta,Mesetas,11
+COL026,Unico encuentro,Cauca,Popayán,23
+COL027,Unico encuentro,Valle del Cauca,Cali,22
+COL028,Apertura,Huila,La Rivera,30
+COL028,Seguimiento/Cierre,Virtual,Virtual,14
+COL029,Apertura,Valle del Cauca,Cali,26
+COL029,Seguimiento/Cierre,Virtual,Virtual,23
+COL030,Apertura,Antioquia,Segovia,25
+COL030,Seguimiento/Cierre,Antioquia,Segovia,25
+COL031,Unico encuentro,Nariño,Tumaco,23
+COL032,Unico encuentro,Cauca,Popayán,30
+COL033,Apertura,Virtual,Virtual,56
+COL033,Seguimiento,Virtual,Virtual,30
+COL033,Seguimiento,Virtual,Virtual,30
+COL033,Cierre,Cauca,Caldono,16
+COL034,Apertura,Virtual,Virtual,26
+COL034,Seguimiento,Virtual,Virtual,17
+COL034,Seguimiento,Virtual,Virtual,30
+COL034,Seguimiento,Virtual,Virtual,17
+COL034,Cierre,Virtual,Virtual,17
+COL035,Apertura,Virtual,Virtual,29
+COL035,Seguimiento/Cierre,Virtual,Virtual,29
+COL036,Apertura,Virtual,Virtual,44
+COL036,Seguimiento/Cierre,Virtual,Virtual,28
+COL037,Apertura,Virtual,Virtual,16
+COL037,Seguimiento/Cierre,Virtual,Virtual,3
+COL038,Apertura,Virtual,Virtual,23
+COL038,Seguimiento/Cierre,Boyacá,Socotá; Tasco,35
+COL039,Apertura,Virtual,Virtual,26
+COL039,Seguimiento,Virtual,Virtual,19
+COL039,Cierre,Bolívar,Cartagena,19
+COL040,Apertura,Virtual,Virtual,20
+COL040,Seguimiento/Cierre,Virtual,Virtual,16
+COL041,Apertura,Virtual,Virtual,26
+COL041,Seguimiento,Santander,Velez; Barboza,20
+COL041,Cierre,Huila,Neiva,21
+COL042,Apertura,Nariño,Tumaco,17
+COL042,Seguimiento/Cierre,Huila,Neiva,8
+COL043,Apertura,Virtual,Virtual,40
+COL043,Seguimiento/Cierre,Virtual,Virtual,22
+COL044,Apertura,Chocó,Istmina,25
+COL044,Seguimiento/Cierre,Chocó,Istmina,25
+COL045,Apertura,Bogotá D.C.,Bogotá D.C.,30
+COL045,Seguimiento/Cierre,Virtual,Virtual,15
+COL046,Unico encuentro,Norte de Santander,Cucuta,29
+COL047,Apertura,Valle del Cauca,Cali,8
+COL047,Seguimiento/Cierre,Valle del Cauca,Cali,8
+COL048,Apertura,Virtual,Virtual,34
+COL048,Seguimiento/Cierre,Cauca,Inzá,46
+COL049,Unico encuentro,Antioquia,Medellín,10
+COL050,Unico encuentro,Bogotá D.C.,Bogotá D.C.,72
+COL051,Apertura,Antioquia,Caucasia,36
+COL051,Seguimiento/Cierre,Antioquia,Caucasia,36
+COL052,Apertura,Bogotá D.C.,Bogotá D.C.,59
+COL052,Seguimiento/Cierre,Virtual,Virtual,34
+COL053,Apertura,Caquetá,Belén de los Andaquíes,45
+COL053,Seguimiento/Cierre,Norte de Santander,Cúcuta,37
+COL054,Unico encuentro,Valle del Cauca,Cali,16
+COL055,Unico encuentro,Valle del Cauca,Cali,30
+COL056,Apertura,Caldas,Aguadas,15
+COL056,Seguimiento/Cierre,La Guajira,Riohacha,24
+COL057,Apertura,Caquetá,Morelia,20
+COL057,Seguimiento/Cierre,Virtual,Virtual,10
+COL058,Apertura,Antioquia,Medellín,15
+COL058,Seguimiento/Cierre,Santander,Bucaramanga,18
+COL059,Unico encuentro,Antioquia,Medellín,30
+COL060,Unico encuentro,Antioquia,Medellín,30
+COL061,Apertura,Putumayo,La Hormiga,23
+COL061,Seguimiento,Virtual,Virtual,23
+COL061,Cierre,Putumayo,La Hormiga,14
+COL062,Apertura,Meta,Villavicencio,44
+COL062,Seguimiento,Virtual,Virtual,44
+COL062,Cierre,Virtual,Virtual,44
+COL063,Apertura,Bogotá D.C.,Bogotá D.C.,37
+COL063,Seguimiento/Cierre,Virtual,Virtual,37
+COL064,Apertura,Bogotá D.C.,Bogotá D.C.,31
+COL064,Seguimiento/Cierre,Bogotá D.C.,Bogotá D.C.,23
+COL065,Apertura,Antioquia,Medellín,40
+COL065,Seguimiento,Virtual,Virtual,31
+COL065,Cierre,Virtual,Virtual,31
+COL066,Apertura,Valle del Cauca,Cali,25
+COL066,Seguimiento/Cierre,Virtual,Virtual,14
+COL067,Apertura,Bogotá D.C.,Bogotá D.C.,23
+COL067,Seguimiento/Cierre,Virtual,Virtual,10
+COL068,Apertura,Amazonas,Leticia,50
+COL068,Seguimiento,Virtual,Virtual,7
+COL068,Cierre,Virtual,Virtual,7
+COL069,Unico encuentro,Virtual,Virtual,105
+COL070,Apertura,Santander,Girón; Bucaramanga; Lebrija,21
+COL071,Apertura,Caqueta,Florencia,26
+COL071,Seguimiento,Virtual,Virtual,14
+COL071,Seguimiento,Virtual,Virtual,16
+COL072,Apertura,Magdalena,Santa Marta,22
+COL073,Apertura,Valle del cauca,Cali,85
+COL074,Apertura,Bogotá D.C.,Bogotá D.C.,40
