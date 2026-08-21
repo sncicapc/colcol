@@ -100,7 +100,14 @@ a{color:var(--green-dark);}
   border-bottom-color:var(--green-dark);
 }
 
-main{ padding:22px 24px 56px; max-width:1180px; margin:0 auto; }
+main{ padding:22px 24px 28px; max-width:1180px; margin:0 auto; }
+.app-footer{
+  text-align:center;
+  font-size:11.5px;
+  color:var(--text-muted);
+  padding:16px 24px 22px;
+  border-top:1px solid var(--border);
+}
 .tab-panel{ display:none; }
 .tab-panel.active{ display:block; animation:fadein .18s ease; }
 @keyframes fadein{ from{opacity:0;} to{opacity:1;} }
@@ -131,14 +138,19 @@ p.panel-desc{
 }
 .range-bar .lbl{ font-size:12.8px; color:var(--text-muted); font-weight:600; }
 .range-bar select{
+  appearance:none;
+  -webkit-appearance:none;
   font-family:inherit;
   font-size:12.8px;
-  padding:6px 9px;
+  font-weight:600;
+  padding:7px 26px 7px 10px;
   border-radius:6px;
   border:1px solid var(--border);
-  background:#fff;
+  background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23585857'/></svg>") no-repeat right 10px center;
   color:var(--text);
+  cursor:pointer;
 }
+.range-bar select:hover{ border-color:var(--green-dark); }
 .range-bar button{
   font-family:inherit;
   font-size:12.5px;
@@ -524,16 +536,22 @@ p.panel-desc{
 #boot-error h3{ margin-top:0; color:var(--green-dark); font-size:15px; }
 
 @media (max-width: 880px){
-  .kpi-grid{ grid-template-columns:1fr 1fr; }
+  .kpi-grid{ grid-template-columns:repeat(3, 1fr); }
   .chart-grid{ grid-template-columns:1fr; }
+}
+@media (max-width: 480px){
+  .kpi-grid{ grid-template-columns:1fr 1fr; }
 }
 
 /* Contenedores angostos (ej. embebido en un iframe): el header se compacta
    pero sigue en fila hasta un ancho bastante reducido. */
 @media (max-width: 900px){
-  .header-title .title-image{ height:104px; }
-  .header-logo-left img, .header-logos img{ height:42px; }
-  .header-logos .divider{ height:32px; }
+  .app-header{ padding:14px 20px; }
+  .header-title .title-image{ height:78px; }
+  .header-logo-left img, .header-logos img{ height:34px; }
+  .header-logos .divider{ height:26px; }
+  .header-logo-left, .header-logos{ padding:5px 10px; }
+  .tab-btn{ padding:10px 14px; }
 }
 @media (max-width: 600px){
   .header-inner{ grid-template-columns:1fr; justify-items:center; text-align:center; }
@@ -553,7 +571,7 @@ p.panel-desc{
       "deptsummary";
   }
   .filter-grid{ grid-template-columns:1fr; }
-  .filters-toggle{ display:flex; }
+  .filters-toggle{ display:flex; padding-top:8px; border-top:1px solid var(--border); }
   .filters-body{ display:none; margin-top:12px; }
   .map-filters.open .filters-body{ display:block; }
   .map-info-cards{ flex-direction:row; flex-wrap:wrap; width:100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:14px; }
@@ -627,7 +645,7 @@ p.panel-desc{
       <div class="chart-card"><h3>Municipios participantes por año</h3><div class="canvas-wrap"><canvas id="chart-municipios-anio"></canvas></div></div>
 
       <div class="chart-card tall full">
-        <h3>Top departamentos por participación</h3>
+        <h3>Departamentos principales por participación</h3>
         <div class="canvas-wrap"><canvas id="chart-top-departamentos"></canvas></div>
       </div>
 
@@ -645,12 +663,12 @@ p.panel-desc{
 
     <div class="map-layout">
       <div class="map-filters" id="map-filters">
+        <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
         <button type="button" class="filters-toggle" id="filters-toggle">
           <span>Filtros de búsqueda</span>
           <svg class="chev-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="filters-body" id="filters-body">
-          <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
           <div class="filter-grid">
             <div>
               <div class="filter-label">Año</div>
@@ -706,6 +724,7 @@ p.panel-desc{
 
 </main>
 
+<footer class="app-footer">Datos actualizados al 20 de agosto de 2026 · APC Colombia</footer>
 
 <script>
 /* ============================================================
@@ -1504,7 +1523,7 @@ function colorMapGeneral(){
       const name = DPTO_TO_DEPT[d.properties.DPTO];
       const c = (name && counts[name]) || 0;
       d._info = name ? `<b>${name}</b><br>${c} intercambio(s)` : '';
-      d3.select(this).attr('fill', c ? scale(c) : MAP_EMPTY);
+      d3.select(this).attr('fill', c ? scale(c) : MAP_EMPTY).attr('stroke', '#fff').attr('stroke-width', 0.7);
     });
 
   document.getElementById('map-legend').innerHTML = `
@@ -1523,7 +1542,7 @@ function colorMapAnfitriones(){
       const name = DPTO_TO_DEPT[d.properties.DPTO];
       const c = (name && counts[name]) || 0;
       d._info = name ? `<b>${name}</b><br>${c} vez/veces anfitrión de buena práctica` : '';
-      d3.select(this).attr('fill', c ? scale(c) : MAP_EMPTY);
+      d3.select(this).attr('fill', c ? scale(c) : MAP_EMPTY).attr('stroke', '#fff').attr('stroke-width', 0.7);
     });
 
   document.getElementById('map-legend').innerHTML = `
@@ -1539,18 +1558,23 @@ function colorMapTriState(participDepts, hostDepts){
       const name = DPTO_TO_DEPT[d.properties.DPTO];
       const esParticipante = name && participDepts.has(name);
       const esAnfitrion = name && hostDepts.has(name);
-      let fill = MAP_EMPTY, label = '';
-      if (esParticipante && esAnfitrion) { fill = PALETTE.greenDark; label = 'Participante y anfitrión'; }
-      else if (esAnfitrion) { fill = PALETTE.yellow; label = 'Anfitrión'; }
+      let fill = MAP_EMPTY, label = '', stroke = '#fff', strokeWidth = 0.7;
+      if (esParticipante && esAnfitrion) {
+        // "Ambos" no depende solo del tono de verde (dificil de distinguir de "participante"
+        // para daltonismo o pantallas malas): se marca ademas con un anillo amarillo grueso.
+        fill = PALETTE.greenDark; label = 'Participante y anfitrión';
+        stroke = PALETTE.yellow; strokeWidth = 2.4;
+      } else if (esAnfitrion) { fill = PALETTE.yellow; label = 'Anfitrión'; }
       else if (esParticipante) { fill = PALETTE.greenMed; label = 'Participante'; }
       d._info = name ? `<b>${name}</b>` + (label ? '<br>' + label : '') : '';
-      d3.select(this).attr('fill', fill).classed('highlight', esParticipante || esAnfitrion);
+      d3.select(this).attr('fill', fill).attr('stroke', stroke).attr('stroke-width', strokeWidth)
+        .classed('highlight', esParticipante || esAnfitrion);
     });
 
   document.getElementById('map-legend').innerHTML = `
     <span class="legend-swatch" style="background:${PALETTE.greenMed}"></span> participante
     <span class="legend-swatch" style="background:${PALETTE.yellow}; margin-left:6px;"></span> anfitrión
-    <span class="legend-swatch" style="background:${PALETTE.greenDark}; margin-left:6px;"></span> ambos
+    <span class="legend-swatch" style="background:${PALETTE.greenDark}; border:2px solid ${PALETTE.yellow}; margin-left:6px;"></span> ambos
     <span class="legend-swatch" style="background:${MAP_EMPTY}; margin-left:6px;"></span> ninguno`;
 }
 
