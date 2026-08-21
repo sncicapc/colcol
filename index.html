@@ -6,9 +6,10 @@
 <title>COL-COL — Colombia Enseña Colombia | APC Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.5.4/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <style>
 :root{
@@ -27,76 +28,56 @@
   --border:#E4E4E2;
   --map-empty:#E7E7E5;
   --tint:#EAF2E3;
+  --banner-green:#1A6E4F;
   --radius:10px;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
-  font-family:"Fira Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-family:"Nunito Sans", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   background:var(--panel-bg);
   color:var(--text);
   line-height:1.45;
 }
+b, strong{ font-weight:700; }
 a{color:var(--green-dark);}
-
-.spectrum-strip{
-  height:5px;
-  background:linear-gradient(90deg, var(--yellow), var(--lime), var(--lime2), var(--green-med), var(--green), var(--green-dark));
-}
 
 /* ---------- Header ---------- */
 .app-header{
-  background:#fff;
-  border-bottom:3px solid var(--green-dark);
-  padding:18px 28px;
+  background-color:var(--banner-green);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><path d='M-20,40 Q40,5 100,40 T220,40 T340,40' stroke='rgba(255,255,255,0.07)' stroke-width='18' fill='none'/><path d='M-20,100 Q40,140 100,100 T220,100 T340,100' stroke='rgba(255,255,255,0.06)' stroke-width='22' fill='none'/><path d='M-20,170 Q40,130 100,170 T220,170 T340,170' stroke='rgba(255,255,255,0.05)' stroke-width='16' fill='none'/><path d='M-20,225 Q40,255 100,225 T220,225 T340,225' stroke='rgba(255,255,255,0.045)' stroke-width='14' fill='none'/></svg>");
+  background-repeat:repeat;
+  background-size:240px 240px;
+  padding:20px 28px;
 }
 .header-inner{
-  display:flex;
-  justify-content:space-between;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
   align-items:center;
   gap:20px;
   max-width:1180px;
   margin:0 auto;
 }
-.header-text .eyebrow{
-  text-transform:uppercase;
-  letter-spacing:.1em;
-  font-size:11.5px;
-  color:var(--green-dark);
-  font-weight:700;
-  margin-bottom:6px;
-}
-.header-text h1{
-  margin:0 0 4px;
-  font-size:24px;
-  font-weight:700;
-  letter-spacing:.005em;
-  color:var(--text);
-}
-.header-text .sub{
-  font-size:13.5px;
-  color:var(--text-muted);
-  font-weight:500;
-}
-#data-status{
-  font-size:12.5px;
-  color:var(--text-muted);
-  margin-top:6px;
-}
-.header-logos{
+.header-logo-left, .header-logos{
   display:flex;
   align-items:center;
   gap:16px;
   flex-shrink:0;
+  background:#fff;
+  border-radius:10px;
+  padding:8px 16px;
 }
-.header-logos img{ display:block; height:72px; width:auto; }
-.header-logos .divider{ width:1px; height:56px; background:var(--border); }
+.header-logo-left img, .header-logos img{ display:block; height:52px; width:auto; }
+.header-logos .divider{ width:1px; height:40px; background:var(--border); }
+.header-title{ text-align:center; }
+.header-title .title-image{ height:140px; width:auto; display:block; margin:0 auto; }
 
 /* ---------- Tabs ---------- */
 .tabs{
   display:flex;
   gap:2px;
-  background:var(--gray);
+  background:#fff;
+  border-bottom:1px solid var(--border);
   padding:0 24px;
   overflow-x:auto;
 }
@@ -104,7 +85,7 @@ a{color:var(--green-dark);}
   appearance:none;
   border:none;
   background:transparent;
-  color:#E9E9E8;
+  color:var(--text-muted);
   font-family:inherit;
   font-size:13.5px;
   font-weight:600;
@@ -113,10 +94,10 @@ a{color:var(--green-dark);}
   border-bottom:3px solid transparent;
   white-space:nowrap;
 }
-.tab-btn:hover{ color:#fff; }
+.tab-btn:hover{ color:var(--green-dark); }
 .tab-btn.active{
-  color:#fff;
-  border-bottom-color:var(--yellow);
+  color:var(--green-dark);
+  border-bottom-color:var(--green-dark);
 }
 
 main{ padding:22px 24px 56px; max-width:1180px; margin:0 auto; }
@@ -188,7 +169,7 @@ p.panel-desc{
 }
 .kpi-value{
   font-size:26px;
-  font-weight:700;
+  font-weight:900;
   color:var(--text);
   line-height:1.1;
 }
@@ -223,7 +204,7 @@ p.panel-desc{
 /* ---------- Mapa tab ---------- */
 .map-layout{
   display:grid;
-  grid-template-columns:320px 1fr;
+  grid-template-columns:320px 1fr 190px;
   gap:16px;
   align-items:start;
 }
@@ -247,13 +228,83 @@ p.panel-desc{
   grid-template-columns:1fr 1fr;
   gap:8px;
 }
+.filter-grid > div{ min-width:0; }
 .filter-grid select{ margin-bottom:0; }
 .filter-label{ font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.03em; margin:0 0 2px; }
+
+/* ---------- Multi-select dropdown ---------- */
+.ms-dropdown{ position:relative; min-width:0; }
+.ms-toggle{
+  width:100%;
+  font-family:inherit;
+  font-size:12.3px;
+  font-weight:600;
+  text-align:left;
+  padding:8px 26px 8px 10px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23585857'/></svg>") no-repeat right 10px center;
+  color:var(--text);
+  cursor:pointer;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ms-toggle:hover{ border-color:var(--green-dark); }
+.ms-dropdown.open .ms-toggle{ border-color:var(--green-dark); }
+.ms-dropdown.has-value .ms-toggle{ color:var(--green-dark); }
+.ms-panel{
+  display:none;
+  position:absolute;
+  z-index:20;
+  top:calc(100% + 4px);
+  left:0;
+  width:240px;
+  max-height:230px;
+  overflow-y:auto;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:8px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  padding:4px;
+}
+.ms-dropdown.open .ms-panel{ display:block; }
+.ms-option{
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  padding:6px 8px;
+  border-radius:5px;
+  font-size:12.3px;
+  color:var(--text);
+  cursor:pointer;
+  white-space:normal;
+  line-height:1.3;
+}
+.ms-option:hover{ background:var(--tint); }
+.ms-option input{ margin:2px 0 0; accent-color:var(--green-dark); flex-shrink:0; }
+.ms-option span{ min-width:0; }
+.ms-panel-empty{ padding:8px; font-size:12px; color:var(--text-muted); }
 .intercambio-list{
   max-height:340px;
   overflow-y:auto;
   border-top:1px solid var(--border);
   margin-top:8px;
+}
+.dept-summary{
+  max-height:260px;
+  overflow-y:auto;
+  border-top:1px solid var(--border);
+  margin-top:10px;
+  padding-top:10px;
+}
+.dept-summary h4{
+  margin:0 0 8px;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+  color:var(--text-muted);
+  font-weight:700;
 }
 .intercambio-item{
   padding:9px 6px;
@@ -314,31 +365,61 @@ p.panel-desc{
   gap:10px;
 }
 .map-panel-header h3{ margin:0; font-size:14px; color:var(--text); }
-#map-context{ font-size:12px; color:var(--text-muted); text-align:right;}
 #map-svg-wrap{ width:100%; position:relative; }
 #map-svg-wrap svg.main-map{ width:100%; height:auto; display:block; }
+
+/* ---------- Map info cards ---------- */
+.map-info-cards{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border-left:1px solid var(--border);
+  padding-left:16px;
+  box-sizing:border-box;
+}
+.info-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:var(--panel-bg);
+  border:1px solid var(--border);
+  border-left:3px solid var(--green-dark);
+  border-radius:8px;
+  padding:10px 12px;
+}
+.info-card .info-icon{
+  flex-shrink:0;
+  width:30px; height:30px;
+  border-radius:50%;
+  background:var(--tint);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--green-dark);
+}
+.info-card .info-icon svg{ width:16px; height:16px; }
+.info-card .info-text{ min-width:0; }
+.info-card .info-value{ font-size:19px; font-weight:900; color:var(--text); line-height:1.1; }
+.info-card .info-label{ font-size:10.8px; color:var(--text-muted); font-weight:600; margin-top:2px; }
 .inset-box{
   position:absolute;
   left:6px;
   top:6px;
-  width:30%;
-  min-width:110px;
-  max-width:150px;
+  width:20%;
+  min-width:60px;
+  max-width:100px;
   background:#fff;
   border:1px solid var(--border);
   border-radius:6px;
-  padding:6px;
+  padding:5px;
 }
 .inset-box .inset-label{
-  font-size:9px;
+  font-size:8px;
   color:var(--text-muted);
   text-align:center;
   margin-top:2px;
-  line-height:1.25;
+  line-height:1.2;
 }
 .inset-box .dept-path{ stroke:var(--green-dark); stroke-width:1.3; }
-.dept-path{ stroke:#fff; stroke-width:0.7; cursor:default; transition:fill .15s; }
-.dept-path.highlight{ cursor:pointer; }
+.dept-path{ stroke:#fff; stroke-width:0.7; cursor:pointer; transition:fill .15s; }
 .map-tooltip{
   position:absolute;
   pointer-events:none;
@@ -395,13 +476,6 @@ p.panel-desc{
   margin:0 6px 6px 0;
 }
 
-footer{
-  text-align:center;
-  font-size:11.5px;
-  color:var(--text-muted);
-  padding:24px;
-}
-
 /* ---------- Loading / error ---------- */
 #boot-screen{
   position:fixed; inset:0; background:var(--panel-bg);
@@ -433,13 +507,14 @@ footer{
   .chart-grid{ grid-template-columns:1fr; }
   .map-layout{ grid-template-columns:1fr; }
   .filter-grid{ grid-template-columns:1fr; }
-  .header-inner{ flex-direction:column; align-items:flex-start; }
+  .header-inner{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+  .header-logo-left, .header-logos{ justify-content:center; }
+  .map-info-cards{ flex-direction:row; flex-wrap:wrap; width:100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:14px; }
+  .map-info-cards .info-card{ flex:1 1 140px; }
 }
 </style>
 </head>
 <body>
-
-<div class="spectrum-strip"></div>
 
 <div id="boot-screen">
   <div class="spinner" id="boot-spinner"></div>
@@ -455,14 +530,14 @@ footer{
 
 <header class="app-header">
   <div class="header-inner">
-    <div class="header-text">
-      <div class="eyebrow">APC Colombia · Dirección de Coordinación Interinstitucional</div>
-      <h1>COL-COL — Colombia Enseña Colombia</h1>
-      <div class="sub">Tablero de seguimiento</div>
-      <div id="data-status"></div>
+    <div class="header-logo-left">
+      <img src="assets/logo_apc.png" alt="APC Colombia">
+    </div>
+    <div class="header-title">
+      <img class="title-image" src="assets/title_colombia.png" alt="Colombia enseña a Colombia en cifras">
     </div>
     <div class="header-logos">
-      <img src="assets/logo_apc.png" alt="APC Colombia">
+      <img src="assets/logo_sncic.png" alt="SNCIC — Sistema Nacional de Cooperación Internacional de Colombia">
       <div class="divider"></div>
       <img src="assets/logo_colcol.png" alt="COL-COL">
     </div>
@@ -470,14 +545,14 @@ footer{
 </header>
 
 <nav class="tabs">
-  <button class="tab-btn active" data-tab="resumen">Resumen general</button>
-  <button class="tab-btn" data-tab="mapa">Mapa interactivo</button>
+  <button class="tab-btn" data-tab="resumen">Resumen general</button>
+  <button class="tab-btn active" data-tab="mapa">Mapa interactivo</button>
 </nav>
 
 <main>
 
   <!-- ============ TAB: RESUMEN (fusionada) ============ -->
-  <section class="tab-panel active" id="tab-resumen">
+  <section class="tab-panel" id="tab-resumen">
     <h2 class="panel-title">Resumen general</h2>
     <p class="panel-desc">Cifras del programa COL-COL. Usa el filtro de años para ver un periodo específico — todas las tarjetas y gráficas se ajustan.</p>
 
@@ -509,15 +584,15 @@ footer{
         <div class="canvas-wrap"><canvas id="chart-top-departamentos"></canvas></div>
       </div>
 
-      <div class="chart-card tall full"><h3>Temáticas principales (eje SEGIB)</h3><div class="canvas-wrap"><canvas id="chart-tematicas"></canvas></div></div>
-      <div class="chart-card tall full"><h3>ODS principales</h3><div class="canvas-wrap"><canvas id="chart-ods"></canvas></div></div>
+      <div class="chart-card tall"><h3>Temáticas principales (eje SEGIB)</h3><div class="canvas-wrap"><canvas id="chart-tematicas"></canvas></div></div>
+      <div class="chart-card tall"><h3>ODS principales</h3><div class="canvas-wrap"><canvas id="chart-ods"></canvas></div></div>
       <div class="chart-card tall full"><h3>Cooperantes principales</h3><div class="canvas-wrap"><canvas id="chart-cooperantes"></canvas></div></div>
       <div class="chart-card tall full"><h3>Entidades socias nacionales principales</h3><div class="canvas-wrap"><canvas id="chart-entidades"></canvas></div></div>
     </div>
   </section>
 
   <!-- ============ TAB: MAPA ============ -->
-  <section class="tab-panel" id="tab-mapa">
+  <section class="tab-panel active" id="tab-mapa">
     <h2 class="panel-title">Mapa interactivo</h2>
     <p class="panel-desc">Explora el mapa eligiendo un intercambio de la lista, aplicando filtros, o cambiando la vista para descubrir cómo se distribuye la participación en el territorio.</p>
 
@@ -527,53 +602,53 @@ footer{
         <div class="filter-grid">
           <div>
             <div class="filter-label">Año</div>
-            <select id="filtro-anio"><option value="">Todos</option></select>
+            <div class="ms-dropdown" id="filtro-anio" data-placeholder="Todos"></div>
           </div>
           <div>
             <div class="filter-label">Departamento</div>
-            <select id="filtro-departamento"><option value="">Todos</option></select>
+            <div class="ms-dropdown" id="filtro-departamento" data-placeholder="Todos"></div>
           </div>
           <div>
             <div class="filter-label">Temática</div>
-            <select id="filtro-tematica"><option value="">Todas</option></select>
+            <div class="ms-dropdown" id="filtro-tematica" data-placeholder="Todas"></div>
           </div>
           <div>
             <div class="filter-label">ODS</div>
-            <select id="filtro-ods"><option value="">Todos</option></select>
+            <div class="ms-dropdown" id="filtro-ods" data-placeholder="Todos"></div>
           </div>
           <div>
             <div class="filter-label">Cooperante</div>
-            <select id="filtro-cooperante"><option value="">Todos</option></select>
+            <div class="ms-dropdown" id="filtro-cooperante" data-placeholder="Todos"></div>
           </div>
           <div>
             <div class="filter-label">Entidad socia</div>
-            <select id="filtro-entidad"><option value="">Todas</option></select>
+            <div class="ms-dropdown" id="filtro-entidad" data-placeholder="Todas"></div>
           </div>
         </div>
-        <button class="clear-filters-btn" id="apply-filters" style="border-color:var(--green-dark); color:var(--green-dark); margin-top:10px;">Aplicar filtros al mapa</button>
         <button class="clear-filters-btn" id="clear-filters">Limpiar filtros</button>
         <div class="intercambio-list" id="intercambio-list"></div>
         <div class="mode-btn-row">
           <button class="reset-btn active-mode" id="map-mode-general">Participación general</button>
           <button class="reset-btn" id="map-mode-anfitriones">Departamentos anfitriones</button>
         </div>
+        <div class="dept-summary" id="dept-summary" style="display:none;"></div>
       </div>
 
       <div class="map-panel">
         <div class="map-panel-header">
           <h3 id="map-title">Participación total por departamento</h3>
-          <div id="map-context"></div>
         </div>
         <div id="map-svg-wrap"></div>
         <div class="map-legend" id="map-legend"></div>
         <div class="selection-detail" id="selection-detail" style="display:none;"></div>
       </div>
+
+      <div class="map-info-cards" id="map-info-cards"></div>
     </div>
   </section>
 
 </main>
 
-<footer>Agencia Presidencial de Cooperación Internacional de Colombia — APC Colombia</footer>
 
 <script>
 /* ============================================================
@@ -788,6 +863,98 @@ function anfitrionesPorDepartamento(registro, desde, hasta){
   return counts;
 }
 
+/* ---------------- Dropdown de selección múltiple ---------------- */
+function createMultiSelect(id, options, { placeholder = 'Todos', onChange = () => {} } = {}){
+  const root = document.getElementById(id);
+  const selected = new Set();
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'ms-toggle';
+  toggle.textContent = placeholder;
+
+  const panel = document.createElement('div');
+  panel.className = 'ms-panel';
+  panel.addEventListener('click', e => e.stopPropagation());
+
+  if (!options.length) {
+    panel.innerHTML = '<div class="ms-panel-empty">Sin opciones</div>';
+  } else {
+    options.forEach(opt => {
+      const label = document.createElement('label');
+      label.className = 'ms-option';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = opt;
+      const span = document.createElement('span');
+      span.textContent = opt;
+      label.appendChild(cb);
+      label.appendChild(span);
+      panel.appendChild(label);
+      cb.addEventListener('change', () => {
+        if (cb.checked) selected.add(opt); else selected.delete(opt);
+        updateToggleLabel();
+        root.classList.toggle('has-value', selected.size > 0);
+        onChange();
+      });
+    });
+  }
+
+  function updateToggleLabel(){
+    if (selected.size === 0) toggle.textContent = placeholder;
+    else if (selected.size === 1) toggle.textContent = [...selected][0];
+    else toggle.textContent = selected.size + ' seleccionados';
+  }
+
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const wasOpen = root.classList.contains('open');
+    document.querySelectorAll('.ms-dropdown.open').forEach(d => d.classList.remove('open'));
+    if (!wasOpen) root.classList.add('open');
+  });
+
+  root.innerHTML = '';
+  root.appendChild(toggle);
+  root.appendChild(panel);
+
+  return {
+    get values(){ return selected; },
+    clear(){
+      selected.clear();
+      panel.querySelectorAll('input').forEach(cb => cb.checked = false);
+      updateToggleLabel();
+      root.classList.remove('has-value');
+    },
+    toggleValue(value){
+      const cb = panel.querySelector(`input[value="${CSS.escape(value)}"]`);
+      if (cb) { cb.checked = !cb.checked; cb.dispatchEvent(new Event('change')); }
+    }
+  };
+}
+document.addEventListener('click', () => {
+  document.querySelectorAll('.ms-dropdown.open').forEach(d => d.classList.remove('open'));
+});
+
+/* ---------------- Tarjetas de información del mapa ---------------- */
+const ICONS = {
+  exchange: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v12"/><path d="M3 9l4-4 4 4"/><path d="M17 21V9"/><path d="M21 15l-4 4-4-4"/></svg>',
+  departamentos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+  municipios: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="6" height="12"/><rect x="14" y="4" width="6" height="17"/><path d="M6.5 12.5v.01M6.5 16v.01M17 8v.01M17 11.5v.01M17 15v.01"/></svg>',
+  anfitrion: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 21v-6h6v6"/></svg>'
+};
+function renderInfoCards(items){
+  const wrap = document.getElementById('map-info-cards');
+  if (!items || !items.length) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = items.map(it => `
+    <div class="info-card">
+      <div class="info-icon">${it.icon}</div>
+      <div class="info-text">
+        <div class="info-value">${it.value.toLocaleString('es-CO')}</div>
+        <div class="info-label">${it.label}</div>
+      </div>
+    </div>`).join('');
+}
+
 /* ---------------- Carga de datos ---------------- */
 function loadCsv(url){
   return new Promise((resolve, reject) => {
@@ -838,9 +1005,6 @@ function showBootError(msg){
 function initApp(){
   setupTabs();
   const years = buildYearRange(DATA.registro);
-  const minY = years[0], maxY = years[years.length - 1];
-  document.getElementById('data-status').textContent =
-    'Datos de ' + minY + ' a ' + maxY + ' · ' + DATA.registro.length + ' intercambios registrados';
 
   setupRangeFilter(years);
   renderAll();
@@ -854,6 +1018,10 @@ function setupTabs(){
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      // Los canvas de Chart.js creados mientras su pestaña estaba oculta quedan
+      // atascados en 0x0 y Chart.resize() no los recupera; los reconstruimos ahora
+      // que el panel es visible y mide su tamaño real.
+      if (btn.dataset.tab === 'resumen') renderAll();
     });
   });
 }
@@ -915,12 +1083,23 @@ function barChart(canvasId, labels, values, {horizontal=false, color=PALETTE.gre
   if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
   CHARTS[canvasId] = new Chart(ctx, {
     type: 'bar',
+    plugins: [ChartDataLabels],
     data: { labels, datasets: [{ data: values, backgroundColor: color, borderRadius: 4, maxBarThickness: horizontal ? 22 : 42 }] },
     options: {
       indexAxis: horizontal ? 'y' : 'x',
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'end',
+          clamp: true,
+          color: PALETTE.gray,
+          font: { size: 10.5, weight: 600 },
+          formatter: v => Number(v || 0).toLocaleString('es-CO')
+        }
+      },
       scales: {
         x: { grid: { display: !horizontal, color: '#F0F0EE' }, ticks: { font: { size: 11 } } },
         y: {
@@ -934,20 +1113,72 @@ function barChart(canvasId, labels, values, {horizontal=false, color=PALETTE.gre
   return CHARTS[canvasId];
 }
 
+function hexToRgba(hex, alpha){
+  const h = hex.replace('#','');
+  const r = parseInt(h.substring(0,2),16), g = parseInt(h.substring(2,4),16), b = parseInt(h.substring(4,6),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function lineChart(canvasId, labels, values, {color=PALETTE.greenDark} = {}){
+  const ctx = document.getElementById(canvasId);
+  if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
+  CHARTS[canvasId] = new Chart(ctx, {
+    type: 'line',
+    plugins: [ChartDataLabels],
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        borderColor: color,
+        backgroundColor: hexToRgba(color, 0.1),
+        borderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 5,
+        pointBackgroundColor: color,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        tension: 0,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 18 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          offset: 4,
+          color: PALETTE.gray,
+          font: { size: 10.5, weight: 600 },
+          formatter: v => Number(v || 0).toLocaleString('es-CO')
+        }
+      },
+      scales: {
+        x: { grid: { display: false, color: '#F0F0EE' }, ticks: { font: { size: 11 } } },
+        y: { grid: { display: true, color: '#F0F0EE' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+      }
+    }
+  });
+  return CHARTS[canvasId];
+}
+
 function renderYearCharts(years, desde, hasta){
   const yearLabels = years.map(String);
 
   const iXA = intercambiosPorAnio(DATA.registro, desde, hasta);
-  barChart('chart-intercambios-anio', yearLabels, yearLabels.map(y => iXA[y] || 0), { color: PALETTE.greenDark });
+  lineChart('chart-intercambios-anio', yearLabels, yearLabels.map(y => iXA[y] || 0), { color: PALETTE.greenDark });
 
   const pXA = participantesPorAnio(DATA.registro, DATA.etapas, desde, hasta);
-  barChart('chart-participantes-anio', yearLabels, yearLabels.map(y => pXA[y] || 0), { color: PALETTE.gray });
+  lineChart('chart-participantes-anio', yearLabels, yearLabels.map(y => pXA[y] || 0), { color: PALETTE.gray });
 
   const dXA = departamentosPorAnio(DATA.registro, DATA.departamentos, desde, hasta);
-  barChart('chart-departamentos-anio', yearLabels, yearLabels.map(y => dXA[y] || 0), { color: PALETTE.greenMed });
+  lineChart('chart-departamentos-anio', yearLabels, yearLabels.map(y => dXA[y] || 0), { color: PALETTE.greenMed });
 
   const mXA = municipiosPorAnio(DATA.registro, DATA.departamentos, desde, hasta);
-  barChart('chart-municipios-anio', yearLabels, yearLabels.map(y => mXA[y] || 0), { color: PALETTE.lime2 });
+  lineChart('chart-municipios-anio', yearLabels, yearLabels.map(y => mXA[y] || 0), { color: PALETTE.lime2 });
 }
 
 function renderTopDepartamentos(desde, hasta){
@@ -956,58 +1187,133 @@ function renderTopDepartamentos(desde, hasta){
   barChart('chart-top-departamentos', sorted.map(p => p[0]), sorted.map(p => p[1]), { horizontal: true, color: PALETTE.green });
 }
 
+// Top n categorías + una categoría "Otros" que agrupa el resto (evita tortas con
+// demasiadas porciones ilegibles cuando hay muchas categorías de nombre largo).
+function topNWithOther(pairs, n){
+  const top = pairs.slice(0, n);
+  const rest = pairs.slice(n);
+  const labels = top.map(p => p[0]);
+  const values = top.map(p => p[1]);
+  if (rest.length) {
+    labels.push('Otros');
+    values.push(rest.reduce((s,p) => s + p[1], 0));
+  }
+  return { labels, values };
+}
+
+const DOUGHNUT_COLORS = [PALETTE.greenDark, PALETTE.green, PALETTE.greenMed, PALETTE.lime2, PALETTE.lime, PALETTE.gray];
+
+// Dibuja el total al centro de la dona — un toque editorial que aprovecha el
+// espacio vacío del cutout en vez de dejarlo en blanco.
+const centerTextPlugin = {
+  id: 'centerText',
+  beforeDraw(chart){
+    if (chart.config.type !== 'doughnut') return;
+    const { ctx, chartArea } = chart;
+    if (!chartArea) return;
+    const total = chart.data.datasets[0].data.reduce((a,b) => a + b, 0);
+    const cx = (chartArea.left + chartArea.right) / 2;
+    const cy = (chartArea.top + chartArea.bottom) / 2;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '900 24px "Nunito Sans", sans-serif';
+    ctx.fillStyle = PALETTE.greenDark;
+    ctx.fillText(total.toLocaleString('es-CO'), cx, cy - 9);
+    ctx.font = '600 10.5px "Nunito Sans", sans-serif';
+    ctx.fillStyle = PALETTE.gray;
+    ctx.fillText('TOTAL', cx, cy + 13);
+    ctx.restore();
+  }
+};
+
+function doughnutChart(canvasId, labels, values){
+  const ctx = document.getElementById(canvasId);
+  if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
+  CHARTS[canvasId] = new Chart(ctx, {
+    type: 'doughnut',
+    plugins: [centerTextPlugin],
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: DOUGHNUT_COLORS.slice(0, labels.length),
+        borderColor: '#fff',
+        borderWidth: 2,
+        spacing: 2,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, padding: 12, font: { size: 11 }, color: PALETTE.gray } },
+        tooltip: {
+          callbacks: {
+            label(ctx){
+              const total = ctx.dataset.data.reduce((a,b) => a + b, 0);
+              const pct = total ? Math.round(ctx.parsed / total * 100) : 0;
+              return ` ${ctx.label}: ${ctx.parsed} (${pct}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+  return CHARTS[canvasId];
+}
+
 function topN(pairs, n){
   const top = pairs.slice(0, n);
   return { labels: top.map(p => p[0]), values: top.map(p => p[1]) };
 }
 
 function renderCooperacion(desde, hasta){
-  const tem = topN(ranking(DATA.registro, 'EJE TEMATICO', { desde, hasta }), 10);
-  barChart('chart-tematicas', tem.labels, tem.values, { horizontal: true, color: PALETTE.greenDark });
+  const tem = topNWithOther(ranking(DATA.registro, 'EJE TEMATICO', { desde, hasta }), 5);
+  doughnutChart('chart-tematicas', tem.labels, tem.values);
 
-  const ods = topN(ranking(DATA.registro, 'ODS PRINCIPAL', { desde, hasta }), 10);
-  barChart('chart-ods', ods.labels, ods.values, { horizontal: true, color: PALETTE.gray });
+  const ods = topNWithOther(ranking(DATA.registro, 'ODS PRINCIPAL', { desde, hasta }), 5);
+  doughnutChart('chart-ods', ods.labels, ods.values);
 
-  const coop = topN(ranking(DATA.registro, 'COOPERANTE PRINCIPAL', { desde, hasta }), 10);
+  const coop = topN(ranking(DATA.registro, 'COOPERANTE PRINCIPAL', { desde, hasta }), 8);
   barChart('chart-cooperantes', coop.labels, coop.values, { horizontal: true, color: PALETTE.greenMed });
 
-  const ent = topN(rankingEntidades(DATA.entidades, DATA.registro, { desde, hasta }), 10);
+  const ent = topN(rankingEntidades(DATA.entidades, DATA.registro, { desde, hasta }), 8);
   barChart('chart-entidades', ent.labels, ent.values, { horizontal: true, color: PALETTE.lime2 });
 }
 
 /* ---------------- Tab: Mapa ---------------- */
-function setupMap(years){
-  const filtroAnio = document.getElementById('filtro-anio');
-  const filtroDepto = document.getElementById('filtro-departamento');
-  const filtroTematica = document.getElementById('filtro-tematica');
-  const filtroOds = document.getElementById('filtro-ods');
-  const filtroCooperante = document.getElementById('filtro-cooperante');
-  const filtroEntidad = document.getElementById('filtro-entidad');
+let MS = {};
 
-  years.forEach(y => filtroAnio.insertAdjacentHTML('beforeend', `<option value="${y}">${y}</option>`));
-  uniqueSorted(DATA.departamentos.map(r => r['DEPARTAMENTO'])).forEach(d =>
-    filtroDepto.insertAdjacentHTML('beforeend', `<option value="${d}">${d}</option>`));
-  uniqueSorted(DATA.registro.map(r => r['EJE TEMATICO'])).forEach(t =>
-    filtroTematica.insertAdjacentHTML('beforeend', `<option value="${t.replace(/"/g,'&quot;')}">${t}</option>`));
-  uniqueSorted(DATA.registro.map(r => r['ODS PRINCIPAL'])).forEach(o =>
-    filtroOds.insertAdjacentHTML('beforeend', `<option value="${o.replace(/"/g,'&quot;')}">${o}</option>`));
-  uniqueSorted(DATA.registro.map(r => r['COOPERANTE PRINCIPAL'])).forEach(c =>
-    filtroCooperante.insertAdjacentHTML('beforeend', `<option value="${c.replace(/"/g,'&quot;')}">${c}</option>`));
-  uniqueSorted(DATA.entidades.map(r => r['ENTIDAD SOCIA NACIONAL']).filter(v => norm(v).toLowerCase() !== 'no registra')).forEach(e =>
-    filtroEntidad.insertAdjacentHTML('beforeend', `<option value="${e.replace(/"/g,'&quot;')}">${e}</option>`));
+function onMapFilterChange(){
+  renderIntercambioList();
+  applyFiltersToMap();
+}
+
+function setupMap(years){
+  const deptOptions = uniqueSorted(DATA.departamentos.map(r => r['DEPARTAMENTO']));
+  const temOptions = uniqueSorted(DATA.registro.map(r => r['EJE TEMATICO']));
+  const odsOptions = uniqueSorted(DATA.registro.map(r => r['ODS PRINCIPAL']));
+  const coopOptions = uniqueSorted(DATA.registro.map(r => r['COOPERANTE PRINCIPAL']));
+  const entOptions = uniqueSorted(DATA.entidades.map(r => r['ENTIDAD SOCIA NACIONAL']).filter(v => norm(v).toLowerCase() !== 'no registra'));
+
+  MS.anio = createMultiSelect('filtro-anio', years.map(String), { placeholder: 'Todos', onChange: onMapFilterChange });
+  MS.departamento = createMultiSelect('filtro-departamento', deptOptions, { placeholder: 'Todos', onChange: onMapFilterChange });
+  MS.tematica = createMultiSelect('filtro-tematica', temOptions, { placeholder: 'Todas', onChange: onMapFilterChange });
+  MS.ods = createMultiSelect('filtro-ods', odsOptions, { placeholder: 'Todos', onChange: onMapFilterChange });
+  MS.cooperante = createMultiSelect('filtro-cooperante', coopOptions, { placeholder: 'Todos', onChange: onMapFilterChange });
+  MS.entidad = createMultiSelect('filtro-entidad', entOptions, { placeholder: 'Todas', onChange: onMapFilterChange });
 
   renderMapSvg();
-  colorMapGeneral();
+  resetMapView();
   renderIntercambioList();
 
-  [filtroAnio, filtroDepto, filtroTematica, filtroOds, filtroCooperante, filtroEntidad].forEach(sel => {
-    sel.addEventListener('change', renderIntercambioList);
-  });
-  document.getElementById('map-search').addEventListener('input', renderIntercambioList);
-  document.getElementById('apply-filters').addEventListener('click', applyFiltersToMap);
+  document.getElementById('map-search').addEventListener('input', onMapFilterChange);
   document.getElementById('clear-filters').addEventListener('click', () => {
     document.getElementById('map-search').value = '';
-    [filtroAnio, filtroDepto, filtroTematica, filtroOds, filtroCooperante, filtroEntidad].forEach(sel => sel.value = '');
+    Object.values(MS).forEach(ms => ms.clear());
     renderIntercambioList();
     resetMapView();
   });
@@ -1031,6 +1337,14 @@ function setActiveModeBtn(id){
 function resetMapView(){
   document.querySelectorAll('.intercambio-item').forEach(el => el.classList.remove('active'));
   document.getElementById('selection-detail').style.display = 'none';
+  const k = kpiTotals(DATA.registro, DATA.etapas, DATA.departamentos, null, null);
+  renderInfoCards([
+    { icon: ICONS.exchange, value: k.totalIntercambios, label: 'Intercambios' },
+    { icon: ICONS.municipios, value: k.totalMunicipios, label: 'Municipios participantes' },
+    { icon: ICONS.departamentos, value: k.totalDepartamentos, label: 'Departamentos participantes' },
+    { icon: ICONS.anfitrion, value: k.totalAnfitriones, label: 'Departamentos anfitriones' }
+  ]);
+  renderDeptSummary(null);
   if (mapMode === 'anfitriones') {
     colorMapAnfitriones();
     document.getElementById('map-title').textContent = 'Departamentos anfitriones de buenas prácticas';
@@ -1038,7 +1352,6 @@ function resetMapView(){
     colorMapGeneral();
     document.getElementById('map-title').textContent = 'Participación total por departamento';
   }
-  document.getElementById('map-context').textContent = '';
 }
 
 function allDeptPaths(){
@@ -1073,7 +1386,7 @@ function renderMapSvg(){
     const insetBox = document.createElement('div');
     insetBox.className = 'inset-box';
     wrap.appendChild(insetBox);
-    const insetW = Math.max(70, width * 0.24);
+    const insetW = Math.max(55, width * 0.16);
     const insetH = insetW * 0.8;
     const insetSvg = d3.select(insetBox).append('svg')
       .attr('viewBox', `0 0 ${insetW} ${insetH}`)
@@ -1096,7 +1409,7 @@ function renderMapSvg(){
       .attr('cx', centroid[0])
       .attr('cy', centroid[1])
       .attr('r', 7);
-    insetBox.insertAdjacentHTML('beforeend', '<div class="inset-label">San Andrés y Providencia</div>');
+    insetBox.insertAdjacentHTML('beforeend', '<div class="inset-label">San Andrés</div>');
   }
 
   const tooltip = d3.select(wrap).append('div').attr('class', 'map-tooltip');
@@ -1109,7 +1422,11 @@ function renderMapSvg(){
         .style('top', (event.clientY - rect.top + 8) + 'px')
         .html(info);
     })
-    .on('mouseleave', function(){ tooltip.style('opacity', 0); });
+    .on('mouseleave', function(){ tooltip.style('opacity', 0); })
+    .on('click', function(event, d){
+      const name = DPTO_TO_DEPT[d.properties.DPTO];
+      if (name && MS.departamento) MS.departamento.toggleValue(name);
+    });
 }
 
 function scaleFrom(light, dark, maxVal){
@@ -1119,7 +1436,7 @@ function scaleFrom(light, dark, maxVal){
 function colorMapGeneral(){
   const counts = intercambiosPorDepartamento(DATA.departamentos, DATA.registro, null, null);
   const maxVal = Math.max(1, ...Object.values(counts));
-  const scale = scaleFrom('#F1F1EF', PALETTE.gray, maxVal);
+  const scale = scaleFrom('#EAF2E3', PALETTE.greenDark, maxVal);
 
   allDeptPaths()
     .classed('highlight', false)
@@ -1131,8 +1448,8 @@ function colorMapGeneral(){
     });
 
   document.getElementById('map-legend').innerHTML = `
-    <span class="legend-swatch" style="background:#F1F1EF"></span> menos intercambios
-    <span class="legend-swatch" style="background:${PALETTE.gray}; margin-left:6px;"></span> más intercambios`;
+    <span class="legend-swatch" style="background:#EAF2E3"></span> menos intercambios
+    <span class="legend-swatch" style="background:${PALETTE.greenDark}; margin-left:6px;"></span> más intercambios`;
 }
 
 function colorMapAnfitriones(){
@@ -1182,13 +1499,20 @@ function colorMapSelection(codigo, nombre){
   const participDepts = new Set(Object.keys(byDept));
   const reg = DATA.registro.find(r => r['CODIGO'] === codigo) || {};
   const hostDepts = new Set(parseHostDepts(reg['TERRITORIO BUENA PRACTICA']));
+  const municipiosSet = new Set();
+  Object.entries(byDept).forEach(([d, munis]) => munis.forEach(m => municipiosSet.add(d + '|' + m)));
 
   colorMapTriState(participDepts, hostDepts);
 
   document.getElementById('map-title').textContent = nombre;
-  document.getElementById('map-context').textContent = participDepts.size + ' departamento(s) participante(s)';
+  renderInfoCards([
+    { icon: ICONS.departamentos, value: participDepts.size, label: 'Departamentos participantes' },
+    { icon: ICONS.municipios, value: municipiosSet.size, label: 'Municipios participantes' },
+    { icon: ICONS.anfitrion, value: hostDepts.size, label: 'Departamentos anfitriones' }
+  ]);
 
-  renderDetallePanel(codigo, byDept, hostDepts);
+  renderDeptSummary(byDept, hostDepts, 'Departamentos y municipios participantes');
+  renderDetallePanel(codigo);
 }
 
 function deptBlockListHtml(byDept, hostDepts){
@@ -1204,7 +1528,19 @@ function deptBlockListHtml(byDept, hostDepts){
   }).join('') + '</div>';
 }
 
-function renderDetallePanel(codigo, byDept, hostDepts){
+// Resumen de departamentos/municipios en el panel lateral, debajo de la lista de intercambios.
+function renderDeptSummary(byDept, hostDepts, title){
+  const panel = document.getElementById('dept-summary');
+  if (!byDept || !Object.keys(byDept).length) {
+    panel.style.display = 'none';
+    panel.innerHTML = '';
+    return;
+  }
+  panel.style.display = 'block';
+  panel.innerHTML = `<h4>${title}</h4>${deptBlockListHtml(byDept, hostDepts)}`;
+}
+
+function renderDetallePanel(codigo){
   const reg = DATA.registro.find(r => r['CODIGO'] === codigo) || {};
   const etapasList = DATA.etapas.filter(r => r['CODIGO'] === codigo);
   const entidadesList = DATA.entidades.filter(r => r['CODIGO'] === codigo);
@@ -1223,9 +1559,6 @@ function renderDetallePanel(codigo, byDept, hostDepts){
 
   const html = `
     <h4>${norm(reg['NOMBRE DEL INTERCAMBIO']) || codigo}</h4>
-    <div class="detail-row"><div class="k">Departamentos y municipios participantes</div>
-      ${deptBlockListHtml(byDept, hostDepts)}
-    </div>
     ${row('Etapas realizadas', etapasHtml)}
     ${row('Objetivo del intercambio', norm(reg['OBJETIVO']))}
     ${row('Buena práctica', norm(reg['BUENA PRACTICA']))}
@@ -1264,29 +1597,34 @@ function buildEntSetByCodigo(){
 function currentFilterValues(){
   return {
     q: norm(document.getElementById('map-search').value).toLowerCase(),
-    year: document.getElementById('filtro-anio').value,
-    depto: document.getElementById('filtro-departamento').value,
-    tematica: document.getElementById('filtro-tematica').value,
-    ods: document.getElementById('filtro-ods').value,
-    cooperante: document.getElementById('filtro-cooperante').value,
-    entidad: document.getElementById('filtro-entidad').value
+    years: MS.anio.values,
+    deptos: MS.departamento.values,
+    tematicas: MS.tematica.values,
+    odsList: MS.ods.values,
+    cooperantes: MS.cooperante.values,
+    entidadesSel: MS.entidad.values
   };
 }
 
+function hasActiveFilters(){
+  const { q, years, deptos, tematicas, odsList, cooperantes, entidadesSel } = currentFilterValues();
+  return !!q || years.size || deptos.size || tematicas.size || odsList.size || cooperantes.size || entidadesSel.size;
+}
+
 function getFilteredRegistroRows(){
-  const { q, year, depto, tematica, ods, cooperante, entidad } = currentFilterValues();
+  const { q, years, deptos, tematicas, odsList, cooperantes, entidadesSel } = currentFilterValues();
   const deptSet = buildDeptSetByCodigo();
   const entSet = buildEntSetByCodigo();
 
   return DATA.registro
     .filter(r => {
-      if (year && String(r['AÑO']) !== String(year)) return false;
+      if (years.size && !years.has(String(r['AÑO']))) return false;
       if (q && !norm(r['NOMBRE DEL INTERCAMBIO']).toLowerCase().includes(q)) return false;
-      if (tematica && norm(r['EJE TEMATICO']) !== tematica) return false;
-      if (ods && norm(r['ODS PRINCIPAL']) !== ods) return false;
-      if (cooperante && norm(r['COOPERANTE PRINCIPAL']) !== cooperante) return false;
-      if (depto && !(deptSet[r['CODIGO']] && deptSet[r['CODIGO']].has(depto))) return false;
-      if (entidad && !(entSet[r['CODIGO']] && entSet[r['CODIGO']].has(entidad))) return false;
+      if (tematicas.size && !tematicas.has(norm(r['EJE TEMATICO']))) return false;
+      if (odsList.size && !odsList.has(norm(r['ODS PRINCIPAL']))) return false;
+      if (cooperantes.size && !cooperantes.has(norm(r['COOPERANTE PRINCIPAL']))) return false;
+      if (deptos.size && !(deptSet[r['CODIGO']] && [...deptos].some(d => deptSet[r['CODIGO']].has(d)))) return false;
+      if (entidadesSel.size && !(entSet[r['CODIGO']] && [...entidadesSel].some(e => entSet[r['CODIGO']].has(e)))) return false;
       return true;
     })
     .sort((a,b) => b['AÑO'] - a['AÑO'] || norm(a['NOMBRE DEL INTERCAMBIO']).localeCompare(norm(b['NOMBRE DEL INTERCAMBIO']),'es'));
@@ -1303,9 +1641,14 @@ function renderIntercambioList(){
 
   list.querySelectorAll('.intercambio-item').forEach(el => {
     el.addEventListener('click', () => {
+      const wasActive = el.classList.contains('active');
       list.querySelectorAll('.intercambio-item').forEach(x => x.classList.remove('active'));
-      el.classList.add('active');
-      colorMapSelection(el.dataset.codigo, el.dataset.nombre);
+      if (wasActive) {
+        applyFiltersToMap();
+      } else {
+        el.classList.add('active');
+        colorMapSelection(el.dataset.codigo, el.dataset.nombre);
+      }
     });
   });
 }
@@ -1313,6 +1656,11 @@ function renderIntercambioList(){
 // Ilumina en el mapa la unión de departamentos (participantes y anfitriones)
 // de todos los intercambios que cumplen los filtros actuales.
 function applyFiltersToMap(){
+  if (!hasActiveFilters()) {
+    resetMapView();
+    return;
+  }
+  const { deptos } = currentFilterValues();
   const rows = getFilteredRegistroRows();
   const codigos = rows.map(r => r['CODIGO']);
   const deptSet = buildDeptSetByCodigo();
@@ -1341,32 +1689,30 @@ function applyFiltersToMap(){
   });
 
   document.querySelectorAll('.intercambio-item').forEach(el => el.classList.remove('active'));
-  colorMapTriState(participUnion, hostUnion);
+
+  // Si el filtro de Departamento tiene selección, solo se colorean esos departamentos
+  // en el mapa (no todos los que coinciden por compartir intercambio con ellos).
+  let mapParticipDepts = participUnion, mapHostDepts = hostUnion, mapCombinedByDept = combinedByDept;
+  if (deptos.size) {
+    mapParticipDepts = new Set([...participUnion].filter(d => deptos.has(d)));
+    mapHostDepts = new Set([...hostUnion].filter(d => deptos.has(d)));
+    mapCombinedByDept = {};
+    deptos.forEach(d => { if (combinedByDept[d]) mapCombinedByDept[d] = combinedByDept[d]; });
+  }
+  colorMapTriState(mapParticipDepts, mapHostDepts);
+
+  const totalMunicipios = Object.values(combinedByDept).reduce((s,set) => s + set.size, 0);
 
   document.getElementById('map-title').textContent = 'Resultado según filtros aplicados';
-  document.getElementById('map-context').textContent =
-    codigos.length + ' intercambio(s) · ' + participUnion.size + ' departamento(s) participante(s) · ' + hostUnion.size + ' anfitrión(es)';
+  renderInfoCards([
+    { icon: ICONS.exchange, value: codigos.length, label: 'Intercambios' },
+    { icon: ICONS.municipios, value: totalMunicipios, label: 'Municipios participantes' },
+    { icon: ICONS.departamentos, value: participUnion.size, label: 'Departamentos participantes' },
+    { icon: ICONS.anfitrion, value: hostUnion.size, label: 'Departamentos anfitriones' }
+  ]);
 
-  const detail = document.getElementById('selection-detail');
-  detail.style.display = 'block';
-  const itemsHtml = rows.slice(0, 30).map(r =>
-    `<div class="etapa-tag" style="cursor:pointer;" data-codigo="${r['CODIGO']}" data-nombre="${norm(r['NOMBRE DEL INTERCAMBIO']).replace(/"/g,'&quot;')}">${r['AÑO']} — ${norm(r['NOMBRE DEL INTERCAMBIO'])}</div>`
-  ).join('');
-  detail.innerHTML = `
-    <h4>${codigos.length} intercambio(s) encontrados</h4>
-    <div class="detail-row"><div class="k">Departamentos y municipios (participantes y anfitriones) en esta selección</div>
-      ${deptBlockListHtml(combinedByDept, hostUnion)}
-    </div>
-    <div class="detail-row"><div class="k">Intercambios (clic para ver el detalle completo)</div><div class="v">${itemsHtml || 'Ninguno.'}</div></div>
-  `;
-  detail.querySelectorAll('[data-codigo]').forEach(el => {
-    el.addEventListener('click', () => {
-      document.querySelectorAll('.intercambio-item').forEach(x => {
-        x.classList.toggle('active', x.dataset.codigo === el.dataset.codigo);
-      });
-      colorMapSelection(el.dataset.codigo, el.dataset.nombre);
-    });
-  });
+  document.getElementById('selection-detail').style.display = 'none';
+  renderDeptSummary(mapCombinedByDept, mapHostDepts, 'Departamentos y municipios en esta selección');
 }
 
 /* ---------------- Arranque ---------------- */
