@@ -259,8 +259,23 @@ p.panel-desc{
   padding:0;
   cursor:pointer;
 }
-.filters-toggle .chev-icon{ width:16px; height:16px; color:var(--green-dark); transition:transform .15s; }
+.filters-toggle .chev-icon{ width:16px; height:16px; color:var(--green-dark); transition:transform .15s; flex-shrink:0; }
 .map-filters.open .filters-toggle .chev-icon{ transform:rotate(180deg); }
+.filters-toggle-label{ display:inline-flex; align-items:center; }
+.filters-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  margin-left:7px;
+  border-radius:9px;
+  background:var(--green-dark);
+  color:#fff;
+  font-size:10.5px;
+  font-weight:700;
+}
 .filter-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -571,7 +586,7 @@ p.panel-desc{
       "deptsummary";
   }
   .filter-grid{ grid-template-columns:1fr; }
-  .filters-toggle{ display:flex; padding-top:8px; border-top:1px solid var(--border); }
+  .filters-toggle{ display:flex; }
   .filters-body{ display:none; margin-top:12px; }
   .map-filters.open .filters-body{ display:block; }
   .map-info-cards{ flex-direction:row; flex-wrap:wrap; width:100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:14px; }
@@ -663,12 +678,12 @@ p.panel-desc{
 
     <div class="map-layout">
       <div class="map-filters" id="map-filters">
-        <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
         <button type="button" class="filters-toggle" id="filters-toggle">
-          <span>Filtros de búsqueda</span>
+          <span class="filters-toggle-label">Filtros de búsqueda<span class="filters-badge" id="filters-badge" style="display:none;"></span></span>
           <svg class="chev-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="filters-body" id="filters-body">
+          <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
           <div class="filter-grid">
             <div>
               <div class="filter-label">Año</div>
@@ -1366,6 +1381,19 @@ let MS = {};
 function onMapFilterChange(){
   renderIntercambioList();
   applyFiltersToMap();
+  updateFiltersBadge();
+}
+
+// Contador en el boton "Filtros de busqueda" (colapsado) que avisa cuantos
+// filtros hay activos, para que no queden aplicados "a escondidas".
+function updateFiltersBadge(){
+  const badge = document.getElementById('filters-badge');
+  if (!badge) return;
+  const { q, years, deptos, tematicas, odsList, cooperantes, entidadesSel } = currentFilterValues();
+  let count = years.size + deptos.size + tematicas.size + odsList.size + cooperantes.size + entidadesSel.size;
+  if (q) count += 1;
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'inline-flex' : 'none';
 }
 
 function setupMap(years){
@@ -1395,6 +1423,7 @@ function setupMap(years){
     Object.values(MS).forEach(ms => ms.clear());
     renderIntercambioList();
     resetMapView();
+    updateFiltersBadge();
   });
   document.getElementById('map-mode-general').addEventListener('click', () => {
     mapMode = 'general';
