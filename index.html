@@ -205,16 +205,26 @@ p.panel-desc{
 .map-layout{
   display:grid;
   grid-template-columns:320px 1fr 190px;
+  grid-template-areas:
+    "filters map cards"
+    "intercambios map cards"
+    "deptsummary map cards";
   gap:16px;
   align-items:start;
 }
-.map-sidebar{
+.map-filters{ grid-area:filters; }
+.map-panel{ grid-area:map; }
+.map-info-cards{ grid-area:cards; }
+.map-intercambios{ grid-area:intercambios; }
+.dept-summary{ grid-area:deptsummary; }
+
+.map-filters, .map-intercambios, .dept-summary{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:14px;
 }
-.map-sidebar input[type="text"], .map-sidebar select{
+.map-filters input[type="text"], .map-filters select{
   width:100%;
   font-family:inherit;
   font-size:12.8px;
@@ -223,6 +233,22 @@ p.panel-desc{
   border:1px solid var(--border);
   margin-bottom:8px;
 }
+.filters-toggle{
+  display:none;
+  width:100%;
+  align-items:center;
+  justify-content:space-between;
+  background:none;
+  border:none;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+  padding:0;
+  cursor:pointer;
+}
+.filters-toggle .chev-icon{ width:16px; height:16px; color:var(--green-dark); transition:transform .15s; }
+.map-filters.open .filters-toggle .chev-icon{ transform:rotate(180deg); }
 .filter-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -288,15 +314,10 @@ p.panel-desc{
 .intercambio-list{
   max-height:340px;
   overflow-y:auto;
-  border-top:1px solid var(--border);
-  margin-top:8px;
 }
 .dept-summary{
-  max-height:260px;
+  max-height:280px;
   overflow-y:auto;
-  border-top:1px solid var(--border);
-  margin-top:10px;
-  padding-top:10px;
 }
 .dept-summary h4{
   margin:0 0 8px;
@@ -505,10 +526,36 @@ p.panel-desc{
 @media (max-width: 880px){
   .kpi-grid{ grid-template-columns:1fr 1fr; }
   .chart-grid{ grid-template-columns:1fr; }
-  .map-layout{ grid-template-columns:1fr; }
-  .filter-grid{ grid-template-columns:1fr; }
+}
+
+/* Contenedores angostos (ej. embebido en un iframe): el header se compacta
+   pero sigue en fila hasta un ancho bastante reducido. */
+@media (max-width: 900px){
+  .header-title .title-image{ height:104px; }
+  .header-logo-left img, .header-logos img{ height:42px; }
+  .header-logos .divider{ height:32px; }
+}
+@media (max-width: 600px){
   .header-inner{ grid-template-columns:1fr; justify-items:center; text-align:center; }
   .header-logo-left, .header-logos{ justify-content:center; }
+}
+
+/* Mapa interactivo en contenedores angostos: el mapa pasa a ser lo primero
+   que se ve, con los filtros colapsados detras de un boton. */
+@media (max-width: 999px){
+  .map-layout{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "filters"
+      "map"
+      "cards"
+      "intercambios"
+      "deptsummary";
+  }
+  .filter-grid{ grid-template-columns:1fr; }
+  .filters-toggle{ display:flex; }
+  .filters-body{ display:none; margin-top:12px; }
+  .map-filters.open .filters-body{ display:block; }
   .map-info-cards{ flex-direction:row; flex-wrap:wrap; width:100%; border-left:none; padding-left:0; border-top:1px solid var(--border); padding-top:14px; }
   .map-info-cards .info-card{ flex:1 1 140px; }
 }
@@ -597,41 +644,41 @@ p.panel-desc{
     <p class="panel-desc">Explora el mapa eligiendo un intercambio de la lista, aplicando filtros, o cambiando la vista para descubrir cómo se distribuye la participación en el territorio.</p>
 
     <div class="map-layout">
-      <div class="map-sidebar">
-        <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
-        <div class="filter-grid">
-          <div>
-            <div class="filter-label">Año</div>
-            <div class="ms-dropdown" id="filtro-anio" data-placeholder="Todos"></div>
+      <div class="map-filters" id="map-filters">
+        <button type="button" class="filters-toggle" id="filters-toggle">
+          <span>Filtros de búsqueda</span>
+          <svg class="chev-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="filters-body" id="filters-body">
+          <input type="text" id="map-search" placeholder="Buscar intercambio por nombre…">
+          <div class="filter-grid">
+            <div>
+              <div class="filter-label">Año</div>
+              <div class="ms-dropdown" id="filtro-anio" data-placeholder="Todos"></div>
+            </div>
+            <div>
+              <div class="filter-label">Departamento</div>
+              <div class="ms-dropdown" id="filtro-departamento" data-placeholder="Todos"></div>
+            </div>
+            <div>
+              <div class="filter-label">Temática</div>
+              <div class="ms-dropdown" id="filtro-tematica" data-placeholder="Todas"></div>
+            </div>
+            <div>
+              <div class="filter-label">ODS</div>
+              <div class="ms-dropdown" id="filtro-ods" data-placeholder="Todos"></div>
+            </div>
+            <div>
+              <div class="filter-label">Cooperante</div>
+              <div class="ms-dropdown" id="filtro-cooperante" data-placeholder="Todos"></div>
+            </div>
+            <div>
+              <div class="filter-label">Entidad socia</div>
+              <div class="ms-dropdown" id="filtro-entidad" data-placeholder="Todas"></div>
+            </div>
           </div>
-          <div>
-            <div class="filter-label">Departamento</div>
-            <div class="ms-dropdown" id="filtro-departamento" data-placeholder="Todos"></div>
-          </div>
-          <div>
-            <div class="filter-label">Temática</div>
-            <div class="ms-dropdown" id="filtro-tematica" data-placeholder="Todas"></div>
-          </div>
-          <div>
-            <div class="filter-label">ODS</div>
-            <div class="ms-dropdown" id="filtro-ods" data-placeholder="Todos"></div>
-          </div>
-          <div>
-            <div class="filter-label">Cooperante</div>
-            <div class="ms-dropdown" id="filtro-cooperante" data-placeholder="Todos"></div>
-          </div>
-          <div>
-            <div class="filter-label">Entidad socia</div>
-            <div class="ms-dropdown" id="filtro-entidad" data-placeholder="Todas"></div>
-          </div>
+          <button class="clear-filters-btn" id="clear-filters">Limpiar filtros</button>
         </div>
-        <button class="clear-filters-btn" id="clear-filters">Limpiar filtros</button>
-        <div class="intercambio-list" id="intercambio-list"></div>
-        <div class="mode-btn-row">
-          <button class="reset-btn active-mode" id="map-mode-general">Participación general</button>
-          <button class="reset-btn" id="map-mode-anfitriones">Departamentos anfitriones</button>
-        </div>
-        <div class="dept-summary" id="dept-summary" style="display:none;"></div>
       </div>
 
       <div class="map-panel">
@@ -640,10 +687,20 @@ p.panel-desc{
         </div>
         <div id="map-svg-wrap"></div>
         <div class="map-legend" id="map-legend"></div>
-        <div class="selection-detail" id="selection-detail" style="display:none;"></div>
+        <div class="mode-btn-row">
+          <button class="reset-btn active-mode" id="map-mode-general">Participación general</button>
+          <button class="reset-btn" id="map-mode-anfitriones">Departamentos anfitriones</button>
+        </div>
       </div>
 
       <div class="map-info-cards" id="map-info-cards"></div>
+
+      <div class="map-intercambios">
+        <div class="intercambio-list" id="intercambio-list"></div>
+        <div class="selection-detail" id="selection-detail" style="display:none;"></div>
+      </div>
+
+      <div class="dept-summary" id="dept-summary" style="display:none;"></div>
     </div>
   </section>
 
@@ -1310,6 +1367,9 @@ function setupMap(years){
   resetMapView();
   renderIntercambioList();
 
+  document.getElementById('filters-toggle').addEventListener('click', () => {
+    document.getElementById('map-filters').classList.toggle('open');
+  });
   document.getElementById('map-search').addEventListener('input', onMapFilterChange);
   document.getElementById('clear-filters').addEventListener('click', () => {
     document.getElementById('map-search').value = '';
